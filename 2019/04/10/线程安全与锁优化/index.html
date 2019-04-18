@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true,"dimmer":true},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本篇将介绍线程安全所涉及的概念和分类、同步实现的方式及虚拟机的底层运作原理，以及虚拟机为了实现高效并发所采取的一系列锁优化措施。">
+<meta name="keywords" content="也许, Java, JVM, MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程安全与锁优化">
+<meta property="og:url" content="https://yexua.github.io/2019/04/10/线程安全与锁优化/index.html">
+<meta property="og:site_name" content="也许丶">
+<meta property="og:description" content="本篇将介绍线程安全所涉及的概念和分类、同步实现的方式及虚拟机的底层运作原理，以及虚拟机为了实现高效并发所采取的一系列锁优化措施。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g1yrillglxj30nz0cuq30.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g1yrinh6huj30nz0cyq2z.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g1yttr1vmzj30rs07oq34.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g1ytvf6yp5j30l70afjrc.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g1yty8nelaj30e10a2mx3.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5494434-604f74504d1e06c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:updated_time" content="2019-04-13T06:10:13.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程安全与锁优化">
+<meta name="twitter:description" content="本篇将介绍线程安全所涉及的概念和分类、同步实现的方式及虚拟机的底层运作原理，以及虚拟机为了实现高效并发所采取的一系列锁优化措施。">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g1yrillglxj30nz0cuq30.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://yexua.github.io/2019/04/10/线程安全与锁优化/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>线程安全与锁优化 | 也许丶</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">也许丶</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/10/线程安全与锁优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">线程安全与锁优化
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-10 15:41:25" itemprop="dateCreated datePublished" datetime="2019-04-10T15:41:25+08:00">2019-04-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-13 14:10:13" itemprop="dateModified" datetime="2019-04-13T14:10:13+08:00">2019-04-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇将介绍线程安全所涉及的概念和分类、同步实现的方式及虚拟机的底层运作原理，以及虚拟机为了实现高效并发所采取的一系列锁优化措施。</p>
+<a id="more"></a>
+<h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p><strong>《Java Concurrency In Practice》</strong>的作者<strong>Brian Goetz</strong>对“线程安全”有个比较恰当的定义：当多个线程访问一个对象时，如果不用考虑这些线程在运行时环境下的调度和交替执行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获得正确的结果，那这个对象是线程安全的。</p>
+<blockquote>
+<p>这个定义比较严谨，<strong>它要求线程安全的代码都必须具备一个特征</strong>：</p>
+<p>代码本身封装了所有必要的正确性保障手段（如互斥同步等），令调用者无须关心多线程的问题，更无须</p>
+<p>自己采取任何措施来保证多线程的正确调用。</p>
+</blockquote>
+<h3 id="Java语言中的线程安全"><a href="#Java语言中的线程安全" class="headerlink" title="Java语言中的线程安全"></a>Java语言中的线程安全</h3><p><strong>分类：</strong>按照线程安全的程度由强至弱分成五类</p>
+<ul>
+<li><strong>不可变：</strong>外部的可见状态永远不会改变，在多个线程之中永远都是一致的状态。<ul>
+<li>一定是线程安全的</li>
+<li>如何实现：<ul>
+<li>如果共享数据是一个<strong>基本数据类型</strong>，只要在定义时用<code>final</code>关键子修饰；</li>
+<li>如果共享数据是一个<strong>对象</strong>，最简单的方法是把对象中带有状态的变量都声明为<code>final</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>绝对的线程安全：</strong>完全满足之前给出的线程安全的定义，即达到“不管运行时环境如何，调用者都不需要任何额外的同步措施”。</li>
+<li><strong>相对的线程安全：</strong>能保证对该对象单独的操作是线程安全的，在调用时无需做额外保障措施，当对于一些特定顺序的连续调用，可能需要在调用端使用额外的同步措施来保证调用的正确性。<ul>
+<li>是通常意义上所讲的线程安全</li>
+<li>大部分的线程安全类都属于这种类型，如<code>Vector</code>、<code>HashTable</code>、<code>Collections#synchronizedCollection()</code>包装的集合..</li>
+</ul>
+</li>
+<li><strong>线程兼容：</strong>对象本身非线程安全的，但可以通过在调用端正确地使用同步手段来保证对象在并发环境中可以安全地使用。<ul>
+<li>是通常意义上所讲的非线程安全</li>
+<li>Java API中大部分类都是属于线程兼容的，如<code>ArrayList</code>和<code>HashMap</code>…</li>
+</ul>
+</li>
+<li><strong>线程对立：</strong>无论调用端是否采取了同步措施，都无法在多线程环境中并发使用的代码。</li>
+</ul>
+<h3 id="线程安全的实现方式"><a href="#线程安全的实现方式" class="headerlink" title="线程安全的实现方式"></a>线程安全的实现方式</h3><blockquote>
+<p>可分为两大手段，本篇重点在虚拟机本身</p>
+<ul>
+<li>通过代码编写实现线程安全</li>
+<li>通过虚拟机本身实现同步与锁</li>
+</ul>
+</blockquote>
+<ol>
+<li>互斥同步</li>
+</ol>
+<ul>
+<li><strong>含义：</strong><ul>
+<li><strong>同步：</strong>在多个线程并发访问共享数据时，保证共享数据在同一个时刻只被一个线程使用。</li>
+<li><strong>互斥：</strong>是实现同步的一种<strong>手段</strong>，临界区（Critical Section）、互斥量（Mutex）和信号量（Semaphore）都是主要的互斥实现方式。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>互斥是因，同步是果；互斥是方法，同步是目的。</p>
+</blockquote>
+<ul>
+<li>属于<strong>悲观</strong>并发策略，即认为只要不做正确的同步措施就肯定会出现问题，因此无论共享数据是否真的会出现竞争，都要加锁。</li>
+<li>最大的<strong>问题</strong>是进行线程阻塞和唤醒所带来的性能问题，也称为<strong>阻塞同步</strong>（Blocking Synchronization）</li>
+<li><strong>手段：</strong><ul>
+<li><strong>使用<code>synchronized</code>关键字：</strong><ul>
+<li><strong>原理：</strong>编译后会在同步块的<strong>前后</strong>分别形成<code>monitorenter</code>和<code>monitorexit</code>这两个字节码指令，并通过一个<code>reference</code>类型的参数来指明要锁定和解锁的对象。若明确指定了对象参数，则取该对象的<code>reference</code>；否则，会根据<code>synchronized</code>修饰的是实例方法还是类方法去取对应的对象实例或Class对象来作为锁对象。</li>
+<li><strong>过程：</strong>执行<code>monitorenter</code>指令时先要尝试获取对象的锁。若该对象没被锁定或者已被当前线程获取，那么锁计数器+1；而在执行<code>monitorexit</code>指令时，锁计数器-1；当锁计数器=0时，锁就被释放；若获取对象锁失败，那当前线程会一直被阻塞等待，直到对象锁被另外一个线程释放为止。</li>
+<li><strong>特别注意：</strong><code>synchronized</code>同步块对同一条线程来说是<strong>可重入</strong>的，不会出现自我锁死的问题；还有，同步块在已进入的线程执行完之前，会阻塞后面其他线程的进入。</li>
+</ul>
+</li>
+<li><strong>使用重入锁<code>ReentrantLock</code>：</strong><ul>
+<li><strong>相同：</strong>用法与<code>synchronized</code>很相似，且都可重入。</li>
+<li><strong>不同：</strong><ul>
+<li><strong>等待可中断</strong>：当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。</li>
+<li><strong>公平锁</strong>：多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。而<code>synchronized</code>是非公平的，即在锁被释放时，任何一个等待锁的线程都有机会获得锁。<code>ReentrantLock</code>默认情况下也是非公平的，但可以通过带布尔值的构造函数改用公平锁。</li>
+<li><strong>锁绑定多个条件</strong>：一个<code>ReentrantLock</code>对象可以通过多次调用<code>newCondition()</code>同时绑定多个<code>Condition</code>对象。而在<code>synchronized</code>中，锁对象的<code>wait()</code>和<code>notify()</code>或<code>notifyAll()</code>只能实现一个隐含的条件，若要和多于一个的条件关联不得不额外地添加一个锁。</li>
+</ul>
+</li>
+<li><strong>选择：</strong>在<code>synchronized</code>能实现需求的情况下，优先考虑使用它来进行同步。下两张图是两者在不同处理器上的吞吐量对比。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g1yrillglxj30nz0cuq30.jpg" alt></p>
+<p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g1yrinh6huj30nz0cyq2z.jpg" alt></p>
+<ol start="2">
+<li><strong>非阻塞同步（Non-Blocking Synchronization）：</strong></li>
+</ol>
+<ul>
+<li><p>基于冲突检测的<strong>乐观</strong>并发策略，即先进行操作，若无其他线程争用共享数据，操作成功；反之产生了冲突再去采取其他的补偿措施。</p>
+</li>
+<li><p>为了保证操作和冲突检测这两步具备原子性，需要用到硬件指令集，比如： </p>
+<ul>
+<li><strong>测试并设置</strong>（Test-and-Set）</li>
+<li><strong>获取并增加</strong>（Fetch-and-Increment）</li>
+<li><strong>交换</strong>（Swap）</li>
+<li><strong>比较并交换</strong>（Compare-and-Swap,CAS）</li>
+<li><strong>加载链接/条件存储</strong>（Load-Linked/Store-Conditional,LL/SC）</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>无同步方案</strong></li>
+</ol>
+<ul>
+<li><p><strong>定义：</strong>不同同步的方式保证线程安全，因为有些代码天生就是线程安全的。下面列举两个例子：</p>
+<ol>
+<li><p><strong>可重入代码（Reentrant Code）/纯代码（Pure Code）</strong></p>
+<ul>
+<li><strong>含义：</strong>可在代码执行的任何时刻中断它去执行另外一段代码，当控制权返回后原来的程序并不会出现任何错误。</li>
+<li><strong>共同特征</strong>：不依赖存储在堆上的数据和公用的系统资源、用到的状态量都由参数中传入、不调用非可重入的方法…</li>
+<li><strong>判定依据</strong>：如果一个方法，它的返回结果是可预测的，只要输入相同的数据就都能返回相同的结果，就满足可重入性。</li>
+</ul>
+<blockquote>
+<p>满足可重入性的代码<strong>一定</strong>是线程安全的，反之，满足线程安全的代码<strong>不一定</strong>是可重入的。</p>
+</blockquote>
+</li>
+<li><p><strong>线程本地存储</strong>（Thread Local Storage）</p>
+<ul>
+<li><strong>含义</strong>：把共享数据的可见范围限制在同一个线程之内，无须同步就能保证线程之间不出现数据争用的问题。</li>
+<li>使用<code>ThreadLocal</code>类可实现线程本地存储的功能：每个线程的<code>Thread</code>对象中都有一个<strong><code>ThreadLocalMap</code></strong>对象，它存储了一组以<strong><code>ThreadLocal.threadLocalHashCode</code></strong>为key、以本地线程变量为value的键值对，而<strong><code>ThreadLocal</code></strong>对象就是当前线程的<strong><code>ThreadLocalMap</code></strong>的访问入口，也就包含了一个独一无二的<strong><code>ThreadLocalHashCode</code></strong>值，通过这个值就可以在线程键值值对中找回对应的本地线程变量。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h2><p>解决并发的正确性之后，为了能在线程之间更『高效』地共享数据、解决竞争问题、提高程序的执行效率，下面介绍五种锁优化技术。</p>
+<ul>
+<li><p><strong>适应性自旋（Adaptive Spinning）</strong></p>
+<ul>
+<li><strong>背景</strong>：互斥同步在实现阻塞和唤醒时需要挂起线程和恢复线程的操作，都需要转入内核态中完成，很影响系统的并发性能；同时，在许多应用上共享数据的锁定状态只是暂时，没必要去挂起和恢复线程。</li>
+<li><strong>自旋锁</strong>：当物理机器有多个处理器使得多个线程同时并行执行时，先让后请求锁的线程等待，但不放弃处理器的执行时间，看看持有锁的线程是否很快就会释放锁，这时只需让线程执行一个忙循环，即自旋</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：自旋等待<strong>不能</strong>代替阻塞，它虽然能避免线程切换的开销，但会占用处理器时间，因此自旋等待的时间<strong>必须</strong>要有一定的限度，如果自旋超过了限定的次数仍未成功获锁，就需要挂线程了。</p>
+</blockquote>
+<ul>
+<li><strong>自适应自旋锁</strong>：自旋的时间不再固定，而是由该锁上的上次自旋时间及锁的拥有者的状态共同决定。具体表现是：<ul>
+<li>如果对于某个锁，自旋等待刚刚成功获得，且持有锁的线程正在运行中，那么虚拟机很可能允许自旋等待的时间更久点。</li>
+<li>如果对于某个锁，自旋很少成功获得过，那么很可能以后将省略自旋等待这个锁，避免浪费处理器资源。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>锁消除（Lock Elimination）</strong></p>
+<ul>
+<li><strong>锁消除</strong>：指虚拟机即时编译器在运行时，对一些代码上要求同步，但是被检测到不可能存在共享数据竞争的锁进行消除。</li>
+<li><strong>判定依据</strong>：如果一段代码中<strong>堆</strong>上的所有数据都不会逃逸出去被其他线程访问到，可把它们当做<strong>栈</strong>上数据对待，即线程私有的，无须同步加锁。</li>
+</ul>
+</li>
+<li><p><strong>锁粗化(Lock Coarsening)</strong></p>
+</li>
+</ul>
+<p>一般情况下，会将同步块的作用范围限制到只在共享数据的实际作用域中才进行同步，使得需要同步的操作数量尽可能变小，保证就算存在锁竞争，等待锁的线程也能尽快拿到锁。</p>
+<p>但如果反复操作对同一个对象进行加锁和解锁，即使没有线程竞争，频繁地进行互斥同步操作也会导致不必要的性能损耗，此时，虚拟机将会把加锁同步的范围粗化到整个操作序列的外部，这样只需加一次锁。</p>
+<ul>
+<li><p><strong>轻量级锁</strong>（Lightweight Locking）</p>
+<ul>
+<li><strong>目的</strong>：在没有多线程竞争的前提下，减少传统的重量级锁使用操作系统互斥量产生的性能消耗，注意不是用来代替重量级锁的。</li>
+</ul>
+<blockquote>
+<p>首先先理解HotSpot虚拟机的对象头的内存布局：分为两部分</p>
+<ul>
+<li>第一部分用于存储对象自身的运行时数据，这部分被称为Mark Word，是实现轻量级锁和偏向锁的关键。如哈希码、GC分代年龄等。</li>
+<li>另外一部分用于存储指向方法区对象类型数据的指针，如果是数组对象还会有一个额外的部分用于存储数组长度。</li>
+</ul>
+</blockquote>
+<p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g1yttr1vmzj30rs07oq34.jpg" alt="HotSpot虚拟机对象头 Mark Word"></p>
+<ul>
+<li><p><strong>加锁过程：</strong>代码进入同步块时，如果同步对象未被锁定（锁标志位为<code>01</code>），虚拟机会在当前线程的栈帧中建立一个名为Lock Record的空间，用于存储锁对象Mark Word的拷贝。如下图。<br><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g1ytvf6yp5j30l70afjrc.jpg" alt="轻量级锁CAS操作之前堆栈与对象的状态"></p>
+<p>之后虚拟机会尝试用CAS操作将对象的Mark Word更新为指向Lock Record的指针。若更新动作成功，那么当前线程就拥有了该对象的锁，且对象Mark Word的锁标志位变为<code>00</code>，即处于轻量级锁定状态；反之，虚拟机会先检查对象的Mark Word是否指向当前线程的栈帧，若当前线程已有该对象的锁，可直接进入同步块继续执行，否则说明改对象已被其他线程抢占。如下图。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g1yty8nelaj30e10a2mx3.jpg" alt="轻量级锁CAS操作之后堆栈与对象的状态"></p>
+<blockquote>
+<p>如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁，锁标志位变为<code>10</code>，Mark Word中存储的就是指向重量级锁的指针，后面等待锁的线程也要进入阻塞状态。</p>
+</blockquote>
+</li>
+<li><p>解锁过程<strong>：若对象的Mark Word仍指向着线程的Lock Record，就用CAS操作把对象当前的Mark Word和线程中复制的Displaced Mark Word替换回来。若替换成功，那么就完成了整个同步过程；反之，说明有其他线程尝试获取该锁，那么就要在释放锁的同时唤醒被挂起的线程。</strong></p>
+</li>
+<li><p><strong>优点</strong>：因为对于绝大部分的锁，在整个同步周期内都是不存在竞争的，所以轻量级锁通过使用CAS操作消除同步使用的互斥量。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>偏向锁</strong>（Biased Locking）</p>
+<ul>
+<li><p><strong>目的</strong>：消除数据在无竞争情况下的同步原语，进一步提高程序的运行性能。</p>
+</li>
+<li><p><strong>含义</strong>：偏向锁会偏向于第一个获得它的线程，如果在后面的执行中该锁没有被其他的线程获取，则持有偏向锁的线程将永远不需要再进行同步。</p>
+</li>
+<li><p><strong>加锁过程</strong>：启用偏向锁的锁对象在第一次被线程获取时，Mark Word的锁标志位会被设置为<code>01</code>，即偏向模式，同时使用CAS操作把获取到这个锁的线程ID记录在对象的Mark Word中。若操作成功，持有偏向锁的线程以后每次进入这个锁相关的同步块时都可不再进行任何同步操作。</p>
+</li>
+<li><p><strong>解锁过程</strong>：当有另外的线程去尝试获取这个锁时，根据锁对象目前是否处于被锁定的状态，撤销偏向后恢复到未锁定<code>01</code>或轻量级锁定<code>00</code>的状态，后续的同步操作就如轻量级锁执行过程。如下图。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5494434-604f74504d1e06c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="偏向锁、轻量级锁的状态转化及对象Mark Word的关系"></p>
+</li>
+<li><p><strong>优点：</strong>可提高带有同步但无竞争的程序性能，但若程序中大多数锁总被多个线程访问，此模式就没必要了。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.jianshu.com/p/ca8801044352" target="_blank" rel="noopener">简书-厘米姑娘：要点提炼| 理解JVM之线程安全&amp;锁优化</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/10/招商银行笔试编程题/" rel="next" title="招商银行笔试编程题">
+                <i class="fa fa-chevron-left"></i> 招商银行笔试编程题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/13/归并排序/" rel="prev" title="归并排序">
+                归并排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg" alt="也许丶">
+            
+              <p class="site-author-name" itemprop="name">也许丶</p>
+              <div class="site-description motion-element" itemprop="description">把生命浪费在美好的事物上</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                大佬们QWQ
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github-yuteng.github.io/" title="https://github-yuteng.github.io/" rel="noopener" target="_blank">于腾</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全"><span class="nav-number">1.</span> <span class="nav-text">线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java语言中的线程安全"><span class="nav-number">1.1.</span> <span class="nav-text">Java语言中的线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程安全的实现方式"><span class="nav-number">1.2.</span> <span class="nav-text">线程安全的实现方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁优化"><span class="nav-number">2.</span> <span class="nav-text">锁优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">也许丶</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
