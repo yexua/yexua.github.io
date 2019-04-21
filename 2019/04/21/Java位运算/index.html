@@ -72,7 +72,7 @@
     root: '/',
     scheme: 'Muse',
     version: '7.1.0',
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true,"dimmer":true},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
     fancybox: false,
@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="也许丶">
 <meta property="og:description" content="Java提供的位运算符有：左移( &amp;lt;&amp;lt; )、右移( &amp;gt;&amp;gt; ) 、无符号右移( &amp;gt;&amp;gt;&amp;gt; ) 、位与( &amp;amp; ) 、位或( | )、位非( ~ )、位异或( ^ )，除了位非( ~ )是一元操作符外，其它的都是二元操作符。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-21T11:00:19.186Z">
+<meta property="og:updated_time" content="2019-04-21T11:06:16.992Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java位运算">
 <meta name="twitter:description" content="Java提供的位运算符有：左移( &amp;lt;&amp;lt; )、右移( &amp;gt;&amp;gt; ) 、无符号右移( &amp;gt;&amp;gt;&amp;gt; ) 、位与( &amp;amp; ) 、位或( | )、位非( ~ )、位异或( ^ )，除了位非( ~ )是一元操作符外，其它的都是二元操作符。">
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2019-04-21 16:32:25 / 修改时间：19:00:19" itemprop="dateCreated datePublished" datetime="2019-04-21T16:32:25+08:00">2019-04-21</time>
+              <time title="创建时间：2019-04-21 16:32:25 / 修改时间：19:06:16" itemprop="dateCreated datePublished" datetime="2019-04-21T16:32:25+08:00">2019-04-21</time>
             
 
             
@@ -487,7 +487,7 @@
 <p><strong>&lt;&lt;= 赋值左移</strong></p>
 <p><strong>和 += 一个概念而已。</strong></p>
 <p>举个例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">         a &amp;= <span class="number">3</span>;</span><br><span class="line">         System.out.println(a);<span class="comment">//结果是1*</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">         a &amp;= <span class="number">3</span>;</span><br><span class="line">         System.out.println(a);<span class="comment">//结果是1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -709,8 +709,6 @@
 
     </div>
   </aside>
-  
-    <div id="sidebar-dimmer"></div>
   
 
 
