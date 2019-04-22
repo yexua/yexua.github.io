@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本篇学习 final在Java语言中，关键字final通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。 final数据用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：  具体的值在编译期间就已经被确定  在运行时被初始化的值，不希望它被改变。   对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接">
+<meta name="keywords" content="也许, Java, JVM, MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关键字final与volatile">
+<meta property="og:url" content="https://yexua.github.io/2019/04/22/关键字final与volatile/index.html">
+<meta property="og:site_name" content="也许丶">
+<meta property="og:description" content="本篇学习 final在Java语言中，关键字final通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。 final数据用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：  具体的值在编译期间就已经被确定  在运行时被初始化的值，不希望它被改变。   对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g2bdcoginfj31ae0oswi5.jpg">
+<meta property="og:updated_time" content="2019-04-22T07:51:10.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关键字final与volatile">
+<meta name="twitter:description" content="本篇学习 final在Java语言中，关键字final通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。 final数据用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：  具体的值在编译期间就已经被确定  在运行时被初始化的值，不希望它被改变。   对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g2bdcoginfj31ae0oswi5.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://yexua.github.io/2019/04/22/关键字final与volatile/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>关键字final与volatile | 也许丶</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">也许丶</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/22/关键字final与volatile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关键字final与volatile
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-22 15:21:02 / 修改时间：15:51:10" itemprop="dateCreated datePublished" datetime="2019-04-22T15:21:02+08:00">2019-04-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java基础/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇学习</p>
+<h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><p>在Java语言中，关键字<strong>final</strong>通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。</p>
+<h4 id="final数据"><a href="#final数据" class="headerlink" title="final数据"></a>final数据</h4><p>用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：</p>
+<ol>
+<li><p>具体的值在编译期间就已经被确定</p>
+</li>
+<li><p>在运行时被初始化的值，不希望它被改变。</p>
+</li>
+</ol>
+<p>对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接对应的，一些确定的计算过程可以直接在编译期完成，优化了运行期的执行效率。</p>
+<p>对于引用类型，我们已知引用本身其实也是存放于虚拟机栈中，final关键字只限制了对这个引用的更改，并不会限制对引用所指的实例化对象的变更。</p>
+<p><strong>空白（blank）final</strong></p>
+<p>一个final属性可以定义的时候不赋予初始的值，但是在其实际使用之前必定需要被初始化，通常final属性的初始化，只会位于构造函数中或者属性定义时的表达式。为此，一个类中<strong>final</strong>域就可以根据对象而有所不同，却又可以保持其恒定不变的特性。</p>
+<h4 id="final参数"><a href="#final参数" class="headerlink" title="final参数"></a>final参数</h4><p>Java允许在参数列表里以声明的方式将参数指明为<strong>final</strong>。这意味这你无法在方法中更改参数引用所指向的对象。</p>
+<h4 id="final方法"><a href="#final方法" class="headerlink" title="final方法"></a>final方法</h4><p>使用final方法的原因有两个。</p>
+<p>第一个原因：可以把方法锁定，以防止任何继承类修改它的含义。</p>
+<p>第二个原因：方法的调用过程采用内嵌机制，更为高效</p>
+<p>在最近的Java版本里，虚拟机做了优化，因此不再需要使用<strong>final</strong>方法来进行优化了。应该让编译器和JVM去处理效率问题，只有在想要明确静止覆盖时，才将方法设置为<strong>final</strong>的。</p>
+<p>类中所有<strong>private</strong>方法都隐式地指定为是<strong>final</strong>的。由于无法取用<strong>private</strong>方法，所以也就无法覆盖它。可以对<strong>private</strong>方法添加<strong>final</strong>修饰词，但这并不能给该方法增加任何额外的意义。</p>
+<p>这一问题会造成混淆。因为，如果你视图覆盖一个<strong>private</strong>方法（隐式是<strong>final</strong>的），似乎是奏效的，而且编译器也不会给出错误信息。</p>
+<h4 id="final类"><a href="#final类" class="headerlink" title="final类"></a>final类</h4><p>当将某个类的整体定义为<strong>final</strong>时，就表明了对于该类的设计永不需要做任何变动，或者出于安全的考虑，它不能有子类。</p>
+<p>由于子类禁止继承，所以final类中所有的方法都隐式指定为是<strong>final</strong>的，因为无法覆盖它们。在<strong>final</strong>类中可以给方法添加<strong>final</strong>修饰词，但这不会增添任何意义。</p>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>在Java语言中volatile关键字是一个类型修饰符。Java中volatile的作用：<strong>强制每次都直接读内存，阻止重排序，确保volatile类型的值一旦被写入缓存必定会被立即更新到主存</strong>。</p>
+<h4 id="内存可见性"><a href="#内存可见性" class="headerlink" title="内存可见性"></a>内存可见性</h4><p>由于 <code>Java</code> 内存模型(<code>JMM</code>)规定，所有的变量都存放在主内存中，而每个线程都有着自己的工作内存(高速缓存)。</p>
+<blockquote>
+<p>这里所提到的主内存可以简单认为是<strong>堆内存</strong>，而工作内存则可以认为是<strong>栈内存</strong>。</p>
+</blockquote>
+<p>如图所示：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g2bdcoginfj31ae0oswi5.jpg" alt></p>
+<p>在并发环境中，可能出现线程B读取到的数据是线程A更新之前的数据。</p>
+<p>这时，就到<code>volatile</code>出场了：</p>
+<blockquote>
+<p>当一个变量被 <code>volatile</code> 修饰时，任何线程对它的写操作都会立即刷新到主内存中，并且会强制让缓存了该变量的线程中的数据清空，必须从主内存重新读取最新数据。</p>
+</blockquote>
+<p><strong>注:<code>volatile</code> 修饰之后并不是让线程直接从主内存中获取数据，依然需要将变量拷贝到工作内存中。</strong></p>
+<h5 id="内存可见性的应用"><a href="#内存可见性的应用" class="headerlink" title="内存可见性的应用"></a>内存可见性的应用</h5><p>当我们需要在两个线程间依据主内存通信时，通信的那个变量就必须的用 <code>volatile</code> 来修饰：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(flag)&#123;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"执行完毕！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Demo demo = <span class="keyword">new</span> Demo();</span><br><span class="line">        <span class="keyword">new</span> Thread(demo, <span class="string">"thread A"</span>).start();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"main 线程正在运行!"</span>);</span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">while</span>(sc.hasNext())&#123;</span><br><span class="line">            String value = sc.next();</span><br><span class="line">            <span class="keyword">if</span>(value.equals(<span class="string">"q"</span>))&#123;</span><br><span class="line">                <span class="keyword">new</span> Thread(()-&gt; demo.stopThread()).start();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"主线程退出了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">stopThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        flag = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主线程在修改了标志位使得线程 A 立即停止，如果没有用 <code>volatile</code> 修饰，就有可能出现延迟。</p>
+<blockquote>
+<p>这里我们需要注意，volatile并不能保证线程安全性！</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VolatileDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> count = <span class="number">0</span>; <span class="comment">//使用 volatile 修饰基本数据内存不能保证原子性</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//private static AtomicInteger count = new AtomicInteger() ;</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">            count++;</span><br><span class="line">            <span class="comment">//count.incrementAndGet() ;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        VolatileDemo volatileDemo = <span class="keyword">new</span> VolatileDemo();</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(volatileDemo, <span class="string">"t1"</span>);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(volatileDemo, <span class="string">"t2"</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        <span class="comment">//t1.join();</span></span><br><span class="line">        t2.start();</span><br><span class="line">        <span class="comment">//t2.join();</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">            count++;</span><br><span class="line">            <span class="comment">//count.incrementAndGet();</span></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"最终Count="</span> + count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里，三个线程（t1,t2,main)同时对一个int类型的count变量进行累加时，会发现最后的结果并不是30000</p>
+<blockquote>
+<p>这是因为虽然 <code>volatile</code> 保证了内存可见性，每个线程拿到的值都是最新值，但 <code>count ++</code> 这个操作并不是原子的，这里面涉及到获取值、自增、赋值的操作并不能同时完成。</p>
+</blockquote>
+<ul>
+<li>所以想到达到线程安全可以使这三个线程串行执行(其实就是单线程，没有发挥多线程的优势)。</li>
+<li>也可以使用 <code>synchronize</code> 或者是锁的方式来保证原子性。</li>
+<li>还可以用 <code>Atomic</code> 包中 <code>AtomicInteger</code> 来替换 <code>int</code>，它利用了 <code>CAS</code> 算法来保证了原子性。</li>
+</ul>
+<h4 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h4><p><code>volatile</code> 还可以防止 <code>JVM</code> 进行指令重排优化。</p>
+<p>举一个伪代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String,String&gt; map ;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> flag = fasle ;</span><br><span class="line"></span><br><span class="line"><span class="comment">//以下方法发生在线程 A 中 初始化 Map</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initMap</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//耗时操作</span></span><br><span class="line">	map = getMap() ;<span class="comment">//1</span></span><br><span class="line">	flag = <span class="keyword">true</span> ;<span class="comment">//2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//发生在线程 B中 等到 Map 初始化成功进行其他操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomeThing</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(!flag)&#123;</span><br><span class="line">		sleep() ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//dosomething</span></span><br><span class="line">	doSomeThing(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当<code>flag</code>没有被<code>volatile</code>修饰时，<code>JVM</code>对1和2进行重排，导致<code>map</code>还没有被初始化，就有可能被线程B使用了。</p>
+<p>加上<code>volatile</code>之后可以防止这样的重排优化，保证业务的正常性。</p>
+<h5 id="指令重排的应用"><a href="#指令重排的应用" class="headerlink" title="指令重排的应用"></a>指令重排的应用</h5><p>一个最经典的场景就是双重懒加载(DCL)的单例模式了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton singleton;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//防止指令重排</span></span><br><span class="line">                    singleton = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>volatile</code> 关键字主要是为了防止指令重排。</p>
+<p>如果不用 ，<code>singleton = new Singleton();</code>，这段代码其实是分为三步：</p>
+<ul>
+<li>分配内存空间。(1)</li>
+<li>初始化对象。(2)</li>
+<li>将 <code>singleton</code> 对象指向分配的内存地址。(3)</li>
+</ul>
+<p>加上 <code>volatile</code> 是为了让以上的三步操作顺序执行，反之有可能第二步在第三步之前被执行就有可能某个线程拿到的单例对象是还没有初始化的，以致于报错。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/21/Java位运算/" rel="next" title="Java位运算">
+                <i class="fa fa-chevron-left"></i> Java位运算
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg" alt="也许丶">
+            
+              <p class="site-author-name" itemprop="name">也许丶</p>
+              <div class="site-description motion-element" itemprop="description">把生命浪费在美好的事物上</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                大佬们QWQ
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github-yuteng.github.io/" title="https://github-yuteng.github.io/" rel="noopener" target="_blank">于腾</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#final"><span class="nav-number">1.</span> <span class="nav-text">final</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#final数据"><span class="nav-number">1.1.</span> <span class="nav-text">final数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#final参数"><span class="nav-number">1.2.</span> <span class="nav-text">final参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#final方法"><span class="nav-number">1.3.</span> <span class="nav-text">final方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#final类"><span class="nav-number">1.4.</span> <span class="nav-text">final类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile"><span class="nav-number">2.</span> <span class="nav-text">volatile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存可见性"><span class="nav-number">2.1.</span> <span class="nav-text">内存可见性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#内存可见性的应用"><span class="nav-number">2.1.1.</span> <span class="nav-text">内存可见性的应用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指令重排序"><span class="nav-number">2.2.</span> <span class="nav-text">指令重排序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#指令重排的应用"><span class="nav-number">2.2.1.</span> <span class="nav-text">指令重排的应用</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">也许丶</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
