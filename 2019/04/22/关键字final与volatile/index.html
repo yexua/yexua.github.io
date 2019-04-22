@@ -96,19 +96,19 @@
 
 
 
-  <meta name="description" content="本篇学习 final在Java语言中，关键字final通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。 final数据用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：  具体的值在编译期间就已经被确定  在运行时被初始化的值，不希望它被改变。   对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接">
+  <meta name="description" content="本篇学习关键字final和volatile">
 <meta name="keywords" content="也许, Java, JVM, MySql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关键字final与volatile">
 <meta property="og:url" content="https://yexua.github.io/2019/04/22/关键字final与volatile/index.html">
 <meta property="og:site_name" content="也许丶">
-<meta property="og:description" content="本篇学习 final在Java语言中，关键字final通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。 final数据用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：  具体的值在编译期间就已经被确定  在运行时被初始化的值，不希望它被改变。   对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接">
+<meta property="og:description" content="本篇学习关键字final和volatile">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g2bdcoginfj31ae0oswi5.jpg">
-<meta property="og:updated_time" content="2019-04-22T07:51:10.991Z">
+<meta property="og:updated_time" content="2019-04-22T07:59:11.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关键字final与volatile">
-<meta name="twitter:description" content="本篇学习 final在Java语言中，关键字final通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。 final数据用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：  具体的值在编译期间就已经被确定  在运行时被初始化的值，不希望它被改变。   对于基本类型，其本身就存放于虚拟机栈内部，由于这些基本类型都是与底层数据类型直接">
+<meta name="twitter:description" content="本篇学习关键字final和volatile">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g2bdcoginfj31ae0oswi5.jpg">
 
 
@@ -369,7 +369,7 @@
                 
               
 
-              <time title="创建时间：2019-04-22 15:21:02 / 修改时间：15:51:10" itemprop="dateCreated datePublished" datetime="2019-04-22T15:21:02+08:00">2019-04-22</time>
+              <time title="创建时间：2019-04-22 15:21:02 / 修改时间：15:59:11" itemprop="dateCreated datePublished" datetime="2019-04-22T15:21:02+08:00">2019-04-22</time>
             
 
             
@@ -426,7 +426,8 @@
       
 
       
-        <p>本篇学习</p>
+        <p>本篇学习关键字final和volatile</p>
+<a id="more"></a>
 <h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><p>在Java语言中，关键字<strong>final</strong>通常指“这是无法修改的”。之所以要采用final关键字，一般是出于性能和设计层面的考虑。</p>
 <h4 id="final数据"><a href="#final数据" class="headerlink" title="final数据"></a>final数据</h4><p>用final关键字修饰的属性，对于Java编译器来说就是一个“常量”。其特点是：</p>
 <ol>
