@@ -658,188 +658,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/21/HashMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="也许丶">
-      <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="也许丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/21/HashMap/" class="post-title-link" itemprop="url">未命名</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-21 13:24:47 / 修改时间：14:53:07" itemprop="dateCreated datePublished" datetime="2019-04-21T13:24:47+08:00">2019-04-21</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>JDK 1.7</p>
-<p>put过程：</p>
-<ul>
-<li>判断当前数组是否需要初始化。</li>
-<li>如果 key 为空，则 put 一个空值进去。</li>
-<li>根据 key 计算出 hashcode。</li>
-<li>根据计算出的 hashcode 定位出所在桶。</li>
-<li>如果桶是一个链表则需要遍历判断里面的 hashcode、key 是否和传入 key 相等，如果相等则进行覆盖，并返回原来的值。</li>
-<li>如果桶是空的，说明当前位置没有数据存入；新增一个 Entry 对象写入当前位置。</li>
-</ul>
-<p>get过程：</p>
-<ul>
-<li>首先也是根据 key 计算出 hashcode，然后定位到具体的桶中。</li>
-<li>判断该位置是否为链表。</li>
-<li>不是链表就根据 <code>key、key 的 hashcode</code> 是否相等来返回值。</li>
-<li>为链表则需要遍历直到 key 及 hashcode 相等时候就返回值。</li>
-<li>啥都没取到就直接返回 null 。</li>
-</ul>
-<p>JDK1.8</p>
-<p>put过程：</p>
-<ol>
-<li>判断当前桶是否为空，空的就需要初始化（resize 中会判断是否进行初始化）。</li>
-<li>根据当前 key 的 hashcode 定位到具体的桶中并判断是否为空，为空表明没有 Hash 冲突就直接在当前位置创建一个新桶即可。</li>
-<li>如果当前桶有值（ Hash 冲突），那么就要比较当前桶中的 <code>key、key 的 hashcode</code>与写入的 key 是否相等，相等就赋值给 <code>e</code>,在第 8 步的时候会统一进行赋值及返回。</li>
-<li>如果当前桶为红黑树，那就要按照红黑树的方式写入数据。</li>
-<li>如果是个链表，就需要将当前的 key、value 封装成一个新节点写入到当前桶的后面（形成链表）。</li>
-<li>接着判断当前链表的大小是否大于预设的阈值，大于时就要转换为红黑树。</li>
-<li>如果在遍历过程中找到 key 相同时直接退出遍历。</li>
-<li>如果 <code>e != null</code> 就相当于存在相同的 key,那就需要将值覆盖。</li>
-<li>最后判断是否需要进行扩容。</li>
-</ol>
-<p>get过程：</p>
-<ol>
-<li>首先将 key hash 之后取得所定位的桶。</li>
-<li>如果桶为空则直接返回 null 。</li>
-<li>否则判断桶的第一个位置(有可能是链表、红黑树)的 key 是否为查询的 key，是就直接返回 value。</li>
-<li>如果第一个不匹配，则判断它的下一个是红黑树还是链表。</li>
-<li>红黑树就按照树的查找方式返回值。</li>
-<li>不然就按照链表的方式遍历匹配返回值。</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/20/线程和进程的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -969,6 +787,185 @@
 <p>线程间可以通过直接读写同-进程中的数据进行通信，但是进程通信需要借助IPC。</p>
 
           
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/20/HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/20/HashMap/" class="post-title-link" itemprop="url">HashMap</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-20 16:02:00" itemprop="dateCreated datePublished" datetime="2019-04-20T16:02:00+08:00">2019-04-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-22 16:02:51" itemprop="dateModified" datetime="2019-04-22T16:02:51+08:00">2019-04-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java基础/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本篇讲解HashMap的相关知识</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/20/HashMap/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -2156,7 +2153,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
