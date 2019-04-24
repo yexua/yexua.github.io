@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本篇记录了Java8新特性Lambda表达式的使用以及函数式接口">
+<meta name="keywords" content="Java8新特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lambda">
+<meta property="og:url" content="https://yexua.github.io/2019/04/24/Lambda/index.html">
+<meta property="og:site_name" content="也许丶">
+<meta property="og:description" content="本篇记录了Java8新特性Lambda表达式的使用以及函数式接口">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-24T10:18:55.307Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lambda">
+<meta name="twitter:description" content="本篇记录了Java8新特性Lambda表达式的使用以及函数式接口">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://yexua.github.io/2019/04/24/Lambda/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Lambda | 也许丶</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">也许丶</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/24/Lambda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Lambda
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-24 16:24:04 / 修改时间：18:18:55" itemprop="dateCreated datePublished" datetime="2019-04-24T16:24:04+08:00">2019-04-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java基础/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇记录了Java8新特性Lambda表达式的使用以及函数式接口</p>
+<a id="more"></a>
+<p>Lambda表达式的基础语法：Java8中引入了一个新的操作符 “-&gt;” 该操作符称为箭头操作符</p>
+<p>箭头操作符将Lambda表达式拆分成两部分：</p>
+<ul>
+<li>左侧：Lambda表达式的参数列表</li>
+<li>右侧：Lambda表达式中所需执行的功能，即Lambda体</li>
+</ul>
+<h4 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h4><ol>
+<li><p>无参数，无返回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -&gt; System.out.println(<span class="string">"Hello Lambda"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有一个参数，无返回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(x) -&gt; System.out.println(x);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若只有一个参数，小括号可以省略不写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x -&gt; System.out.println(x);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有两个以上的参数，有返回值，并且Lambda体中有多条语句</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Integer&gt; com = (x, y) -&gt;&#123;</span><br><span class="line">	System.out.println(<span class="string">"函数式接口"</span>);</span><br><span class="line">	<span class="keyword">return</span> Integer.compare(x, y);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>若Lambda体中只有一条语句，return和大括号都可以省略不写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Integer&gt; coms = (Integer x, Integer y) -&gt; Integer.compare(x, y);</span><br><span class="line"><span class="comment">// Comparator&lt;Integer&gt; com = Integer::compare;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda表达式的参数列表的数据类型可以省略不写，因为JVM编译器可以通过上下文推断出，数据类型，即“类型推断”。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Integer&gt; coms = (x, y) -&gt; Integer.compare(x, y);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Lambda表达式需要“函数式接口”的支持</p>
+<p><strong>函数式接口：</strong>接口中只有一个抽象方法的接口，称为函数式接口。可以使用注解@<code>FunctionalInterface</code>修饰，可以检查是否是函数式接口。</p>
+<h4 id="内置函数式接口"><a href="#内置函数式接口" class="headerlink" title="内置函数式接口"></a>内置函数式接口</h4><p>Java8中帮我们写好了函数式接口，无需我们自己定义</p>
+<h5 id="四大核心函数式接口"><a href="#四大核心函数式接口" class="headerlink" title="四大核心函数式接口"></a>四大核心函数式接口</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">函数式接口</th>
+<th style="text-align:center">参数类型</th>
+<th style="text-align:center">返回类型</th>
+<th style="text-align:center">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Consumer&lt;T&gt;<br> 消费性接口</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">void</td>
+<td style="text-align:center">对类型为T的对象应用操消费型接口  作，包含方法:void accept(I t)</td>
+</tr>
+<tr>
+<td style="text-align:center">Supplier&lt;T&gt;<br> 供给型接口</td>
+<td style="text-align:center">无</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">返回类型为T的对象，包含方法: T get()；</td>
+</tr>
+<tr>
+<td style="text-align:center">Punction&lt;T, R&gt;<br>函数性接口</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">R</td>
+<td style="text-align:center">对类型为T的对象应用操作，并返回结果。结果是R类型的对象。包含方法：R apply(T t);</td>
+</tr>
+<tr>
+<td style="text-align:center">Predicate&lt;T&gt;<br> 断定型接口</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">确定类型为T的对象是否满足某约束，并返回boolean值，包含方法boolean test(T t);</td>
+</tr>
+</tbody>
+</table>
+<p><strong>代码演示：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LambdaTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        eat(<span class="number">36</span>, m -&gt; System.out.println(<span class="string">"吃红烧鱼，每次消费"</span> + m + <span class="string">"元"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String hello_world = strHandler(<span class="string">"Hello World"</span>, str -&gt; str.substring(<span class="number">6</span>, 													str.length()));</span><br><span class="line">        System.out.println(hello_world);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; numList = getNumList(<span class="number">10</span>, () -&gt; (<span class="keyword">int</span>) (Math.random() * <span class="number">100</span>));</span><br><span class="line">        numList.forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = Arrays.asList(<span class="string">"Hello"</span>, <span class="string">"no"</span>, <span class="string">"ok"</span>, <span class="string">"java"</span>);</span><br><span class="line">        List&lt;String&gt; strings = filterString(list, s -&gt; s.length() &gt; <span class="number">2</span>);</span><br><span class="line">        strings.forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 消费型接口</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(<span class="keyword">double</span> money, Consumer&lt;Double&gt; con)</span> </span>&#123;</span><br><span class="line">        con.accept(money);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 供给型接口</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">getNumList</span><span class="params">(<span class="keyword">int</span> num, Supplier&lt;Integer&gt; supplier)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">            list.add(supplier.get());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 函数性接口</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">strHandler</span><span class="params">(String str, Function&lt;String, String&gt; fun)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fun.apply(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 断言型接口</span></span><br><span class="line">    <span class="comment">// 将满足条件的字符串，放入集合中</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">filterString</span><span class="params">(List&lt;String&gt; list, Predicate&lt;String&gt; predicate)</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; strList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String s : list) &#123;</span><br><span class="line">            <span class="keyword">if</span> (predicate.test(s)) &#123;</span><br><span class="line">                strList.add(s);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> strList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="其他接口"><a href="#其他接口" class="headerlink" title="其他接口"></a>其他接口</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">函数式接口</th>
+<th style="text-align:center">参数类型</th>
+<th style="text-align:center">返回类型</th>
+<th style="text-align:center">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">BiFunction&lt;T, U, R&gt; <br>消费性接口</td>
+<td style="text-align:center">T,U</td>
+<td style="text-align:center">R</td>
+<td style="text-align:center">对类型为T，U参数应用操作，返回R类型的结果。包含方法为R apply(T t, U u);</td>
+</tr>
+<tr>
+<td style="text-align:center">UnaryOperator&lt;T&gt;<br>(Function子接口)</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">对类型为T的对象进行一元运算，并返回T类型的结果。包含方法为T apply(I t);</td>
+</tr>
+<tr>
+<td style="text-align:center">BinaryOperator&lt;T&gt;<br>(BiFunction子接口)</td>
+<td style="text-align:center">T,T</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">对类型为T的对象进行二元运算，并返回T类型的结果。包含方法为T apply(T t1, T t2);</td>
+</tr>
+<tr>
+<td style="text-align:center">BiConsumer&lt;T, U&gt;</td>
+<td style="text-align:center">T,U</td>
+<td style="text-align:center">void</td>
+<td style="text-align:center">对类型为T, U参数应用操作。包含方法为void accept(T t, U u)</td>
+</tr>
+<tr>
+<td style="text-align:center">ToIntFunction&lt;T&gt;<br>ToLongFunction&lt;T&gt;<br>ToDoubleFunction&lt;T&gt;</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">int<br>long<br>double</td>
+<td style="text-align:center">分别计算int、long、double、值的函数</td>
+</tr>
+<tr>
+<td style="text-align:center">IntFunction&lt;R&gt;<br>LongFunction&lt;R&gt;<br>DoubleFunction&lt;R&gt;</td>
+<td style="text-align:center">int<br>long<br>double</td>
+<td style="text-align:center">R</td>
+<td style="text-align:center">参数分别为int、long、double类型的函数</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java8新特性/" rel="tag"># Java8新特性</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/23/JDK1.8Stream/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg" alt="也许丶">
+            
+              <p class="site-author-name" itemprop="name">也许丶</p>
+              <div class="site-description motion-element" itemprop="description">把生命浪费在美好的事物上</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                大佬们QWQ
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github-yuteng.github.io/" title="https://github-yuteng.github.io/" rel="noopener" target="_blank">于腾</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法格式"><span class="nav-number">1.</span> <span class="nav-text">语法格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置函数式接口"><span class="nav-number">2.</span> <span class="nav-text">内置函数式接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#四大核心函数式接口"><span class="nav-number">2.1.</span> <span class="nav-text">四大核心函数式接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他接口"><span class="nav-number">2.2.</span> <span class="nav-text">其他接口</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">也许丶</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

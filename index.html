@@ -324,6 +324,603 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/24/Lambda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/24/Lambda/" class="post-title-link" itemprop="url">Lambda</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-24 16:24:04 / 修改时间：18:18:55" itemprop="dateCreated datePublished" datetime="2019-04-24T16:24:04+08:00">2019-04-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java基础/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本篇记录了Java8新特性Lambda表达式的使用以及函数式接口</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/24/Lambda/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/23/JDK1.8Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/23/JDK1.8Stream/" class="post-title-link" itemprop="url">未命名</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-23 14:36:13 / 修改时间：17:51:24" itemprop="dateCreated datePublished" datetime="2019-04-23T14:36:13+08:00">2019-04-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>JAVA8新特性-Stream接口<br>|      | <em> Stream 接口(果然是新东西,连Editplus都没标红提示) |<br>| —- | ————————————————– |<br>|      |                                                    |<br>|      | </em> 它提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势，使用 fork/join 并行方式来拆分任务和加速处理过程。 |<br>| —- | ———————————————————— |<br>|      |                                                              |<br>|      | <em> 通常编写并行代码很难而且容易出错, 但使用 Stream API 无需编写一行多线程的代码，就可以很方便地写出高性能的并发程序 |<br>| —- | ———————————————————— |<br>|      |                                                              |<br>|      | </em> Stream 的另外一大特点是，数据源本身可以是无限的。 |<br>| —- | ————————————————— |<br>|      |                                                     |<br>|      | <em> 它并非是数据结构,也不是容器.而是一个过程 |<br>| —- | —————————————— |<br>|      |                                            |<br>|      | </em> 流的操作分为两种 |<br>| —- | —————— |<br>|      |                    |<br>|      | Intermediate |<br>| —- | ———— |<br>|      |              |<br>|      | <em> 一个流可以后面跟随零个或多个 intermediate 操作。其目的主要是打开流，做出某种程度的数据映射/过滤，然后返回一个新的流，交给下一个操作使用。这类操作都是惰性化的（lazy） |<br>| —- | ———————————————————— |<br>|      |                                                              |<br>|      | </em> 就是说，仅仅调用到这类方法，并没有真正开始流的遍历。 |<br>| —- | —————————————————— |<br>|      |                                                        |<br>|      | * 方法 |<br>| —- | —— |<br>|      |        |<br>|      | map (mapToInt, flatMap 等)、 |<br>| —- | —————————- |<br>|      |                              |<br>|      | filter |<br>| —- | —— |<br>|      |        |<br>|      | distinct |<br>| —- | ——– |<br>|      |          |</p>
+<p>|                                  | sorted                                                       |<br>|                                  | peek                                                         |<br>|                                  | limit                                                        |<br>|                                  | skip                                                         |<br>|                                  | parallel                                                     |<br>|                                  | sequential                                                   |<br>|                                  | unordered                                                    |<br>|                                  | Terminal                                                     |<br>|                                  | <em> 一个流只能有一个 terminal 操作，当这个操作执行后，流就被使用“光”了，无法再被操作。所以这必定是流的最后一个操作。 |<br>|                                  | </em> Terminal 操作的执行，才会真正开始流的遍历，并且会生成一个结果，或者一个 side effect。 |<br>|                                  | <em> 方法                                                       |<br>|                                  | forEach                                                      |<br>|                                  | forEachOrdered                                               |<br>|                                  | toArray                                                      |<br>|                                  | reduce                                                       |<br>|                                  | collect                                                      |<br>|                                  | min                                                          |<br>|                                  | max                                                          |<br>|                                  | count                                                        |<br>|                                  | anyMatch                                                     |<br>|                                  | allMatch                                                     |<br>|                                  | noneMatch                                                    |<br>|                                  | findFirst                                                    |<br>|                                  | findAny                                                      |<br>|                                  | iterator                                                     |<br>|                                  |                                                              |<br>|                                  | </em> 如果一个流的操作,没有 Terminal ,则该流中的任何 Intermediate 操作都不会执行 |<br>|                                  |                                                              |<br>|                                  | —————————-                                 |<br>|                                  | JAVA8新特性-Stream的获得    |                               |<br>|                                  | —————————-                                 |<br>|                                  | 1,Collection 子类创建                                        |<br>|                                  | <em> 子类直接调用 stream();方法(常用)                           |<br>|                                  | </em> 子类直接调用 parallelStream();方法,定义在 Collection 接口中的 default 方法 |<br>|                                  |                                                              |<br>|                                  | 2,数组创建                                                   |<br>|                                  | <em>  Arrays.stream(T[] array);                                 |<br>|                                  |                                                              |<br>|                                  | 4,Stream 静态方法创建                                        |<br>|                                  | </em> Stream<integer> integerStream = Stream.of(1,2,3,4,5,6);    |<br>|                                  |                                                              |<br>|                                  | 5,文件IO创建                                                 |<br>|                                  | <em> Stream<string> stream = Files.lines(String path,Charset charser); |<br>|                                  | </string></em> 该流会自动关闭                                             |<br>|                                  |                                                              |<br>|                                  | # 创建无限流的方法                                           |<br>|                                  | <em> Stream<t> str = Stream.generate(Supplier<t> supplier);     |<br>|                                  | </t></t></em> 该流每次执行 foreach 都会调用 supplier 的 get 方法,也就是说该构建方法可以创建无限大的流 |<br>|                                  |                                                              |<br>|                                  | <em> Stream.iterate(1, item -&gt; item + 1).limit(10).forEach(System.out::println); |<br>|                                  | </em> 先获取一个无限长度的正整数集合的Stream，然后取出前10个打印。千万记住使用limit方法，不然会无限打印下去。 |<br>|                                  |                                                              |<br>|                                  | —————————-                                 |<br>|                                  | JAVA8新特性-Stream接口方法    |                             |<br>|                                  | —————————-                                 |<br>|                                  | parallel();                                                  |<br>|                                  | <em> 启用并行流                                                 |<br>|                                  |                                                              |<br>|                                  | filter            (Predicate&lt;? super T&gt; predicate);          |<br>|                                  | </em> 用于过滤,筛选                                              |<br>|                                  |                                                              |<br>|                                  | map                (Function&lt;? super T, ? extends R&gt; mapper); |<br>|                                  | <em> 对于Stream中包含的元素使用给定的转换函数进行转换操作,把所有的返回值,组成新的流 |<br>|                                  | </em> ‘传入个User对象(User流),提取里面的所有name属性,转换为一个Stream的流’ |<br>|                                  | <em> 新生成的Stream只包含转换生成的元素。                       |<br>|                                  |                                                              |<br>|                                  | flatMap            (Function&lt;? super T, ? extends Stream&lt;? extends R&gt;&gt; mapper); |<br>|                                  | </em> 传入的就是流,                                              |<br>|                                  | <em> 和map类似，不同的是传入的元素,就是一个流                   |<br>|                                  | </em> 说白了,就是传入的每一个流,然后合并起来成为一个流,返回      |<br>|                                  | <em> 注意参数对象 Function 的返回值是 Stream                    |<br>|                                  |                                                              |<br>|                                  | mapToInt                                                     |<br>|                                  | mapToLong                                                    |<br>|                                  | mapToDouble                                                  |<br>|                                  | </em> 这三个都是一样的,计算后的新的流是指定值类型(IntStream,LongStream,DoubleStream)可以免除自动装箱/拆箱的额外消耗； |<br>|                                  |                                                              |<br>|                                  | sorted            ();                                        |<br>|                                  | <em> 也是排序,需要元素自身实现 Comparable 接口                  |<br>|                                  |                                                              |<br>|                                  | sorted            (Comparator&lt;? super T&gt; comparator);        |<br>|                                  | </em> 排序,自定义 Comparator 来完成排序                          |<br>|                                  |                                                              |<br>|                                  | peek            (Consumer&lt;? super T&gt; action);                |<br>|                                  | <em> 生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实例），新Stream每个元素被消费的时候都会执行给定的消费函数； |<br>|                                  | </em> 跟 map 的区别就是,map是创建新的返回,这个不返回直接在原来的上改 |<br>|                                  |                                                              |<br>|                                  | limit            (long maxSize);                             |<br>|                                  | <em> 返回流前面的几个元素,如果原Stream中包含的元素个数小于N，那就获取其所有的元素 |<br>|                                  | </em> 也可以用在 Set 集合的流上,那么截取到的流,是无序的          |<br>|                                  |                                                              |<br>|                                  | skip            (long n);                                    |<br>|                                  | <em> 丢弃(跳过)流前面的几个元素,如果原Stream中包含的元素个数小于N，那么返回空Stream； |<br>|                                  |                                                              |<br>|                                  | forEach            (Consumer&lt;? super T&gt; action);             |<br>|                                  | </em> 遍历,在多核情况下也许会失去顺序                            |<br>|                                  | <em> 如果你需要多核遍历,那么需要调用 arr.parallelStream().forEach(System.out::println);  ‘Collection’ 接口的默认方法 |<br>|                                  |                                                              |<br>|                                  | forEachOrdered    (Consumer&lt;? super T&gt; action);              |<br>|                                  | </em> 同上,但是,’在多核情况下顺序不会有影响’                     |<br>|                                  |                                                              |<br>|                                  | reduce            (T identity, BinaryOperator<t> accumulator); |<br>|                                  | <em> 第一个参数是初始值,后面 Lambda传递俩值.表示要进行啥操作,得到啥结果 |<br>|                                  | </em> int sum = numbers.stream().reduce(0,(a,b) -&gt; {a + b});            //求一组集合中所有数字的和 |<br>|                                  | <em> 如果是 parallelStream(); 并行流调用执行的话,传递给 Lambda 表达式 accumulator 的俩变量不能更改状态,而且操作必须满足结合律才可以按任意顺序执行 |<br>|                                  |                                                              |<br>|                                  | reduce            ();                                        |<br>|                                  | </em> 上面的重载,无初始值                                        |<br>|                                  | <em> 返回 Optional<t>,因没初始值.怕流是空的                     |<br>|                                  | </t></em> Optional<integer> max = numbers.stream().reduce(Integer::max);                    //返回数字流中的最大值 |<br>|                                  |                                                              |<br>|                                  | toArray            ();                                       |<br>|                                  | <em> 返回 Object[] 数组                                         |<br>|                                  |                                                              |<br>|                                  | findFirst        ();                                         |<br>|                                  | </em> 这是一个 termimal 兼 short-circuiting 操作，它总是返回 Stream 的第一个元素，或者空。 |<br>|                                  |                                                              |<br>|                                  | findAny                                                      |<br>|                                  | <em> 同上,也是返回第一个元素.但是这个牛逼之处在于,’处理并行’.   |<br>|                                  | </em> 如果你不介意返回的元素是哪个,可以使用这个                  |<br>|                                  |                                                              |<br>|                                  | distinct        ();                                          |<br>|                                  | <em> 去除重复,会依赖hashCode和equals                            |<br>|                                  |                                                              |<br>|                                  | count            ();                                         |<br>|                                  | </em> 返回流中元素的个数                                         |<br>|                                  |                                                              |<br>|                                  | min(Comparator com);                                         |<br>|                                  | <em> 根据比较器,获取最的元素                                    |<br>|                                  |                                                              |<br>|                                  | max(Comparator com);                                         |<br>|                                  | </em> 根据比较器,获取最大的元素                                  |<br>|                                  |                                                              |<br>|                                  | collect(Collectors.toList());                                |<br>|                                  | <em> 把结果,转换为一个集合                                      |<br>|                                  | </em> 接收一个 Collectors 接口的实现,用于把元素中的内容,进行一个汇总 |<br>|                                  |                                                              |<br>|                                  |                                                              |<br>|                                  | //匹配系列的API                                              |<br>|                                  | allMatch(Predicate&lt;? super T&gt; predicate)                     |<br>|                                  | <em> 检查是否匹配所有元素,返回 boolean                          |<br>|                                  |                                                              |<br>|                                  | anyMatch(Predicate&lt;? super T&gt; predicate)                     |<br>|                                  | </em> 检查是否至少匹配一个元素 boolean                           |<br>|                                  |                                                              |<br>|                                  | noneMath(Predicate&lt;? super T&gt; predicate)                     |<br>|                                  | <em> 检查是否未匹配中任何元素 boolean                           |<br>|                                  |                                                              |<br>|                                  | findFirst()                                                  |<br>|                                  | </em> 返回第一个元素                                             |<br>|                                  | <em> 返回是的类型是 Optional                                    |<br>|                                  |                                                              |<br>|                                  | findAny()                                                    |<br>|                                  | </em> 返回当前流中的任意元素                                     |<br>|                                  | * 返回是的类型是 Optional                                    |<br>|                                  |                                                              |</integer></t></integer></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/23/Mybatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/23/Mybatis/" class="post-title-link" itemprop="url">未命名</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-23 14:28:43 / 修改时间：14:36:26" itemprop="dateCreated datePublished" datetime="2019-04-23T14:28:43+08:00">2019-04-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>MyBatis 是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。MyBatis 可以使用简单的 XML 或注解来配置和映射原生类型、接口和 Java 的 POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/23/QQ中的TCP和UDP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/23/QQ中的TCP和UDP/" class="post-title-link" itemprop="url">未命名</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-23 13:45:16 / 修改时间：13:45:40" itemprop="dateCreated datePublished" datetime="2019-04-23T13:45:16+08:00">2019-04-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>QQ以UDP协议为主，以TCP协议为辅</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/22/关键字final与volatile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -678,7 +1275,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/20/线程和进程的区别/" class="post-title-link" itemprop="url">未命名</a>
+                <a href="/2019/04/20/线程和进程的区别/" class="post-title-link" itemprop="url">线程和进程的区别</a>
               
             
           </h1>
@@ -703,7 +1300,7 @@
                 
               
 
-              <time title="创建时间：2019-04-20 20:06:51" itemprop="dateCreated datePublished" datetime="2019-04-20T20:06:51+08:00">2019-04-20</time>
+              <time title="创建时间：2019-04-20 20:36:49" itemprop="dateCreated datePublished" datetime="2019-04-20T20:36:49+08:00">2019-04-20</time>
             
 
             
@@ -720,7 +1317,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-21 18:59:44" itemprop="dateModified" datetime="2019-04-21T18:59:44+08:00">2019-04-21</time>
+                <time title="修改时间：2019-04-22 20:46:11" itemprop="dateModified" datetime="2019-04-22T20:46:11+08:00">2019-04-22</time>
               
             
           </span>
@@ -1082,7 +1679,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-20 20:06:48" itemprop="dateModified" datetime="2019-04-20T20:06:48+08:00">2019-04-20</time>
+                <time title="修改时间：2019-04-23 14:28:57" itemprop="dateModified" datetime="2019-04-23T14:28:57+08:00">2019-04-23</time>
               
             
           </span>
@@ -1363,705 +1960,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/14/冒泡排序&选择排序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="也许丶">
-      <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="也许丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/14/冒泡排序&选择排序/" class="post-title-link" itemprop="url">冒泡排序&选择排序</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-14 14:33:54" itemprop="dateCreated datePublished" datetime="2019-04-14T14:33:54+08:00">2019-04-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-15 20:16:05" itemprop="dateModified" datetime="2019-04-15T20:16:05+08:00">2019-04-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/排序/" itemprop="url" rel="index"><span itemprop="name">排序</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本篇介绍冒泡排序、选择排序两种排序算法</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/14/冒泡排序&选择排序/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/13/归并排序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="也许丶">
-      <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="也许丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/13/归并排序/" class="post-title-link" itemprop="url">归并排序</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-13 16:41:47" itemprop="dateCreated datePublished" datetime="2019-04-13T16:41:47+08:00">2019-04-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-14 14:33:46" itemprop="dateModified" datetime="2019-04-14T14:33:46+08:00">2019-04-14</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/排序/" itemprop="url" rel="index"><span itemprop="name">排序</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本篇简单讲述一下归并排序以及时间复杂度</p>
-<ul>
-<li>归并排序思想</li>
-<li>代码实现</li>
-<li>过程分析</li>
-<li>时间复杂度和空间复杂</li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/13/归并排序/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/10/线程安全与锁优化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="也许丶">
-      <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="也许丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/10/线程安全与锁优化/" class="post-title-link" itemprop="url">线程安全与锁优化</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-10 15:41:25" itemprop="dateCreated datePublished" datetime="2019-04-10T15:41:25+08:00">2019-04-10</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-13 14:10:13" itemprop="dateModified" datetime="2019-04-13T14:10:13+08:00">2019-04-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本篇将介绍线程安全所涉及的概念和分类、同步实现的方式及虚拟机的底层运作原理，以及虚拟机为了实现高效并发所采取的一系列锁优化措施。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/10/线程安全与锁优化/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/10/招商银行笔试编程题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="也许丶">
-      <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="也许丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/10/招商银行笔试编程题/" class="post-title-link" itemprop="url">招商银行笔试编程题</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-10 13:49:02 / 修改时间：16:06:05" itemprop="dateCreated datePublished" datetime="2019-04-10T13:49:02+08:00">2019-04-10</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>记录了一下4月9日招商银行的笔试题中的编程题</p>
-<p>第一题，巧克力</p>
-<p>第二题，倒水</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/10/招商银行笔试编程题/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2105,7 +2008,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2155,7 +2058,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2369,15 +2276,15 @@
       
     
       
+    
+      
+    
+      
+    
+      
+    
+      
         
-      
-    
-      
-    
-      
-    
-      
-    
       
     
   
