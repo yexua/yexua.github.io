@@ -72,7 +72,7 @@
     root: '/',
     scheme: 'Muse',
     version: '7.1.0',
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true,"dimmer":false},
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
     fancybox: false,
@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="也许丶">
 <meta property="og:description" content="本篇记录了Java8新特性Lambda表达式的使用以及函数式接口">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-24T10:18:55.307Z">
+<meta property="og:updated_time" content="2019-04-24T12:00:13.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lambda">
 <meta name="twitter:description" content="本篇记录了Java8新特性Lambda表达式的使用以及函数式接口">
@@ -341,11 +341,11 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Lambda
+          <h2 class="post-title" itemprop="name headline">Lambda
 
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2019-04-24 16:24:04 / 修改时间：18:18:55" itemprop="dateCreated datePublished" datetime="2019-04-24T16:24:04+08:00">2019-04-24</time>
+              <time title="创建时间：2019-04-24 16:24:04 / 修改时间：20:00:13" itemprop="dateCreated datePublished" datetime="2019-04-24T16:24:04+08:00">2019-04-24</time>
             
 
             
@@ -541,6 +541,22 @@
 </tr>
 </tbody>
 </table>
+<h4 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h4><p>三种语法格式</p>
+<ol>
+<li>对象::实例方法</li>
+<li>类::静态方法名</li>
+<li>类::实例方法名</li>
+</ol>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>Lambda体中调用方法的参数列表与返回值类型，要与函数式接口中抽象方法的函数列表和返回值类型保一致。</li>
+<li>若Lambda参数列表中的第一参数式实例方法的调用者，而第二个参数式是实例方法的参数时，可以使用ClassName::method</li>
+</ol>
+</blockquote>
+<h4 id="构造器引用"><a href="#构造器引用" class="headerlink" title="构造器引用"></a>构造器引用</h4><p><strong>格式:ClassName::new</strong></p>
+<p><strong>注:需要调用的构造器的参数列表要与函数式接口中抽象方法的参数列表保持一致！</strong></p>
+<h4 id="数组引用"><a href="#数组引用" class="headerlink" title="数组引用"></a>数组引用</h4><p><strong>格式：Type[]::new</strong></p>
 
       
     </div>
@@ -577,7 +593,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/23/JDK1.8Stream/" rel="next" title>
+              <a href="/2019/04/23/Mybatis/" rel="next" title>
                 <i class="fa fa-chevron-left"></i> 
               </a>
             
@@ -586,6 +602,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/26/Stream/" rel="prev" title="Stream">
+                Stream <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -656,7 +676,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -723,6 +743,21 @@
           
 
           
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yexua" title="GitHub &rarr; https://github.com/yexua" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
 
           
 
@@ -762,7 +797,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法格式"><span class="nav-number">1.</span> <span class="nav-text">语法格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置函数式接口"><span class="nav-number">2.</span> <span class="nav-text">内置函数式接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#四大核心函数式接口"><span class="nav-number">2.1.</span> <span class="nav-text">四大核心函数式接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他接口"><span class="nav-number">2.2.</span> <span class="nav-text">其他接口</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法格式"><span class="nav-number">1.</span> <span class="nav-text">语法格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置函数式接口"><span class="nav-number">2.</span> <span class="nav-text">内置函数式接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#四大核心函数式接口"><span class="nav-number">2.1.</span> <span class="nav-text">四大核心函数式接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他接口"><span class="nav-number">2.2.</span> <span class="nav-text">其他接口</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法引用"><span class="nav-number">3.</span> <span class="nav-text">方法引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造器引用"><span class="nav-number">4.</span> <span class="nav-text">构造器引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组引用"><span class="nav-number">5.</span> <span class="nav-text">数组引用</span></a></li></ol></div>
             
 
           </div>

@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，Stream API 提供了一种高效且易于使用的处理数据的方式。">
+<meta name="keywords" content="Java8新特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stream">
+<meta property="og:url" content="https://yexua.github.io/2019/04/26/Stream/index.html">
+<meta property="og:site_name" content="也许丶">
+<meta property="og:description" content="Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，Stream API 提供了一种高效且易于使用的处理数据的方式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-26T07:10:47.205Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stream">
+<meta name="twitter:description" content="Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，Stream API 提供了一种高效且易于使用的处理数据的方式。">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://yexua.github.io/2019/04/26/Stream/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Stream | 也许丶</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">也许丶</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/26/Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Stream
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 14:40:05 / 修改时间：15:10:47" itemprop="dateCreated datePublished" datetime="2019-04-26T14:40:05+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java基础/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，Stream API 提供了一种高效且易于使用的处理数据的方式。</p>
+<a id="more"></a>
+<p>流（Stream）是数据渠道，用于操作数据源（集合、数组等）所生成的元素序列。</p>
+<p>“集合讲的是数据，流讲的是计算”</p>
+<p><strong>注意：</strong></p>
+<ol>
+<li>Stream自己不会存储元素</li>
+<li>Steam不会改变源对象。相反，他们会返回一个持有结果的新Stream。</li>
+<li>Stream操作是延迟执行的。这意味着他们会等到需要结果的时候才执行。</li>
+</ol>
+<p>Stream的三个操作步骤：</p>
+<ol>
+<li>创建Stream</li>
+<li>中间操作</li>
+<li>终止操作（终端操作）</li>
+</ol>
+<h4 id="创建Stream"><a href="#创建Stream" class="headerlink" title="创建Stream"></a>创建Stream</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过Collection 系列集合提供的stream()或parallelStream()获取stream</span></span><br><span class="line"><span class="comment">// default Stream&lt;E&gt; stream() : 返回一个顺序流 </span></span><br><span class="line"><span class="comment">// default Stream&lt;E&gt; parallelStream() : 返回一个并行流</span></span><br><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Stream&lt;String&gt; stream = list.stream();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过Arrays中的静态方法stream()获取数组流</span></span><br><span class="line"><span class="comment">// static &lt;T&gt; Stream&lt;T&gt; stream(T[] array): 返回一个流</span></span><br><span class="line"><span class="comment">// 重载形式，能够处理对应基本类型的数组： </span></span><br><span class="line"><span class="comment">// public static IntStream stream(int[] array)</span></span><br><span class="line"><span class="comment">// public static LongStream stream(long[] array)</span></span><br><span class="line"><span class="comment">// public static DoubleStream stream(double[] array)</span></span><br><span class="line">Integer[] arr = <span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; integerStream = Arrays.stream(arr);</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过Stream中的静态方法of()获取流</span></span><br><span class="line"><span class="comment">//public static&lt;T&gt; Stream&lt;T&gt; of(T... values) : 返回一个流</span></span><br><span class="line">Stream&lt;String&gt; aa = Stream.of(<span class="string">"aa"</span>, <span class="string">"bb"</span>, <span class="string">"cc"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建无限流</span></span><br><span class="line"><span class="comment">// 可以使用静态方法 Stream.iterate() 和 Stream.generate(), 创建无限流。</span></span><br><span class="line"><span class="comment">// 迭代</span></span><br><span class="line"><span class="comment">// public static&lt;T&gt; Stream&lt;T&gt; iterate(final T seed, final UnaryOperator&lt;T&gt; f) </span></span><br><span class="line"><span class="comment">// 生成</span></span><br><span class="line"><span class="comment">// public static&lt;T&gt; Stream&lt;T&gt; generate(Supplier&lt;T&gt; s) : </span></span><br><span class="line">Stream&lt;Integer&gt; iterate = Stream.iterate(<span class="number">0</span>, x -&gt; x + <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="中间操作（Intermediate-Operation）"><a href="#中间操作（Intermediate-Operation）" class="headerlink" title="中间操作（Intermediate Operation）"></a>中间操作（Intermediate Operation）</h4><p>多个中间操作可以连接起来形成一个流水线，除非流水 线上触发终止操作，否则中间操作不会执行任何的处理！ 而在终止操作时一次性全部处理，称为“惰性求值”。</p>
+<h5 id="筛选和切片"><a href="#筛选和切片" class="headerlink" title="筛选和切片"></a>筛选和切片</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">方 法</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">filter<br>(Predicate p)</td>
+<td style="text-align:center">接收 Lambda ， 从流中排除某些元素。</td>
+</tr>
+<tr>
+<td style="text-align:center">distinct()</td>
+<td style="text-align:center">筛选，通过流所生成元素的 hashCode() 和 equals() 去 除重复元素</td>
+</tr>
+<tr>
+<td style="text-align:center">limit(long maxSize)</td>
+<td style="text-align:center">截断流，使其元素不超过给定数量。</td>
+</tr>
+<tr>
+<td style="text-align:center">skip(long n)</td>
+<td style="text-align:center">跳过元素，返回一个扔掉了前 n 个元素的流。若流中元素 不足 n 个，则返回一个空流。与 limit(n) 互补</td>
+</tr>
+</tbody>
+</table>
+<h5 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">方 法</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">map(Function f)</td>
+<td style="text-align:center">接收一个函数作为参数，该函数会被应用到每个元 素上，并将其映射成一个新的元素。</td>
+</tr>
+<tr>
+<td style="text-align:center">mapToDouble(ToDoubleFunction f)</td>
+<td style="text-align:center">接收一个函数作为参数，该函数会被应用到每个元 素上，产生一个新的 DoubleStream。</td>
+</tr>
+<tr>
+<td style="text-align:center">mapToInt(ToIntFunction f)</td>
+<td style="text-align:center">接收一个函数作为参数，该函数会被应用到每个元 素上，产生一个新的 IntStream。</td>
+</tr>
+<tr>
+<td style="text-align:center">mapToLong(ToLongFunction f)</td>
+<td style="text-align:center">接收一个函数作为参数，该函数会被应用到每个元 素上，产生一个新的 LongStream。</td>
+</tr>
+<tr>
+<td style="text-align:center">flatMap(Function f)</td>
+<td style="text-align:center">接收一个函数作为参数，将流中的每个值都换成另 一个流，然后把所有流连接成一个流</td>
+</tr>
+</tbody>
+</table>
+<h5 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h5><p>##### </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方 法</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">sorted()</td>
+<td style="text-align:center">产生一个新流，其中按自然顺序排序</td>
+</tr>
+<tr>
+<td style="text-align:center">sorted(Comparator comp</td>
+<td style="text-align:center">产生一个新流，其中按比较器顺序排序</td>
+</tr>
+</tbody>
+</table>
+<h4 id="终止操作（Terminal-Operation）"><a href="#终止操作（Terminal-Operation）" class="headerlink" title="终止操作（Terminal Operation）"></a>终止操作（Terminal Operation）</h4><p>终端操作会从流的流水线生成结果。其结果可以是任何不是流的 值，例如：List、Integer，甚至是 void 。</p>
+<p>Terminal 操作的执行，才会真正开始流的遍历，并且会生成一个结果，或者一个 side effect。</p>
+<p><strong>注：一个流只能有一个 terminal 操作，当这个操作执行后，流就被使用“光”了，无法再被操作。所以这必定是流的最后一个操作。</strong></p>
+<h5 id="查找与匹配"><a href="#查找与匹配" class="headerlink" title="查找与匹配"></a>查找与匹配</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">方 法</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">allMatch(Predicate p)</td>
+<td style="text-align:center">检查是否匹配所有元素</td>
+</tr>
+<tr>
+<td style="text-align:center">anyMatch(Predicate p)</td>
+<td style="text-align:center">检查是否至少匹配一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">noneMatch(Predicate p)</td>
+<td style="text-align:center">检查是否没有匹配所有元素</td>
+</tr>
+<tr>
+<td style="text-align:center">findFirst()</td>
+<td style="text-align:center">返回第一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">findAny()</td>
+<td style="text-align:center">返回当前流中的任意元素</td>
+</tr>
+<tr>
+<td style="text-align:center">count()</td>
+<td style="text-align:center">返回流中元素总数</td>
+</tr>
+<tr>
+<td style="text-align:center">max(Comparator c)</td>
+<td style="text-align:center">返回流中最大值</td>
+</tr>
+<tr>
+<td style="text-align:center">min(Comparator c)</td>
+<td style="text-align:center">返回流中最小值</td>
+</tr>
+<tr>
+<td style="text-align:center">forEach(Consumer c)</td>
+<td style="text-align:center">内部迭代(使用 Collection 接口需要用户去做迭 代，称为外部迭代。相反，Stream API 使用内部 迭代——它帮你把迭代做了)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="归约"><a href="#归约" class="headerlink" title="归约"></a>归约</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">方 法</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">reduce(T iden, BinaryOperator b)</td>
+<td style="text-align:center">可以将流中元素反复结合起来，得到一个值。 返回 T 归约</td>
+</tr>
+<tr>
+<td style="text-align:center">reduce(BinaryOperator b)</td>
+<td style="text-align:center">可以将流中元素反复结合起来，得到一个值。 返回 Optional<t></t></td>
+</tr>
+</tbody>
+</table>
+<h5 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h5><p>Collector 接口中方法的实现决定了如何对流执行收集操作(如收集到 List、Set、Map)。但是 Collectors 实用类提供了很多静态方法，可以方便地创建常见收集器实例，具体方法与实例如下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方 法</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">collect(Collector c)</td>
+<td style="text-align:center">将流转换为其他形式。接收一个 Collector接口的 实现，用于给Stream中元素做汇总的方法</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// toList List&lt;T&gt; 把流中元素收集到List</span></span><br><span class="line">List&lt;Employee&gt; emps= list.stream().collect(Collectors.toList()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// toSet Set&lt;T&gt; 把流中元素收集到Set</span></span><br><span class="line">Set&lt;Employee&gt; emps= list.stream().collect(Collectors.toSet()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// toCollection Collection&lt;T&gt; 把流中元素收集到创建的集合</span></span><br><span class="line">Collection&lt;Employee&gt;emps=list.stream().collect(Collectors.toCollection(ArrayList::<span class="keyword">new</span>)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// counting Long 计算流中元素的个数</span></span><br><span class="line"><span class="keyword">long</span> count = list.stream().collect(Collectors.counting()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// summingInt Integer 对流中元素的整数属性求和</span></span><br><span class="line">inttotal=list.stream().collect(Collectors.summingInt(Employee::getSalary)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// averagingInt Double 计算流中元素Integer属性的平均 值 </span></span><br><span class="line">doubleavg= list.stream().collect(Collectors.averagingInt(Employee::getSalary)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// summarizingInt IntSummaryStatistics 收集流中Integer属性的统计值。 如：平均值 </span></span><br><span class="line">IntSummaryStatisticsiss=list.stream().collect(Collectors.summarizingInt(Employee::getSalary));</span><br><span class="line"></span><br><span class="line"><span class="comment">// joining String 连接流中每个字符串 </span></span><br><span class="line">String str= list.stream().map(Employee::getName).collect(Collectors.joining());</span><br><span class="line"></span><br><span class="line"><span class="comment">// maxBy Optional&lt;T&gt; 根据比较器选择最大值 </span></span><br><span class="line">Optional&lt;Emp&gt; max = list.stream().collect(Collectors.maxBy(comparingInt(Employee::getSalary)));</span><br><span class="line"></span><br><span class="line"><span class="comment">// minBy Optional&lt;T&gt; 根据比较器选择最小值 </span></span><br><span class="line">Optional&lt;Emp&gt; min = list.stream().collect(Collectors.minBy(comparingInt(Employee::getSalary))); </span><br><span class="line"></span><br><span class="line"><span class="comment">// reducing 归约产生的类型 从一个作为累加器的初始值 开始，利用BinaryOperator与 流中元素逐个结合，从而归 约成单个值 </span></span><br><span class="line"><span class="keyword">int</span> total = list.stream().collect(Collectors.reducing(<span class="number">0</span>, Employee::getSalar, Integer::sum)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// collectingAndThen 转换函数返回的类型 包裹另一个收集器，对其结果转换函数 </span></span><br><span class="line"><span class="keyword">int</span> how = list.stream().collect(Collectors.collectingAndThen(Collectors.toList(), List::size)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// groupingBy Map&lt;K, List&lt;T&gt;&gt; 根据某属性值对流分组，属性为K，结果为V </span></span><br><span class="line">Map&lt;Emp.Status, List&lt;Emp&gt;&gt; map= list.stream() .collect(Collectors.groupingBy(Employee::getStatus)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// partitioningBy Map&lt;Boolean, List&lt;T&gt;&gt; 根据true或false进行分区</span></span><br><span class="line">Map&lt;Boolean,List&lt;Emp&gt;&gt;vd=list.stream().collect(Collectors.partitioningBy(Employee::getManage));</span><br></pre></td></tr></table></figure>
+<h4 id="API练习"><a href="#API练习" class="headerlink" title="API练习"></a>API练习</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStreamAPI</span> </span>&#123;</span><br><span class="line">    List&lt;Transaction&gt; transactions = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Trader raoul = <span class="keyword">new</span> Trader(<span class="string">"Raoul"</span>, <span class="string">"Cambridge"</span>);</span><br><span class="line">        Trader mario = <span class="keyword">new</span> Trader(<span class="string">"Mario"</span>, <span class="string">"Milan"</span>);</span><br><span class="line">        Trader alan = <span class="keyword">new</span> Trader(<span class="string">"Alan"</span>, <span class="string">"Cambridge"</span>);</span><br><span class="line">        Trader brian = <span class="keyword">new</span> Trader(<span class="string">"Brian"</span>, <span class="string">"Cambridge"</span>);</span><br><span class="line"></span><br><span class="line">        transactions = Arrays.asList(</span><br><span class="line">                <span class="keyword">new</span> Transaction(brian, <span class="number">2011</span>, <span class="number">300</span>),</span><br><span class="line">                <span class="keyword">new</span> Transaction(raoul, <span class="number">2012</span>, <span class="number">1000</span>),</span><br><span class="line">                <span class="keyword">new</span> Transaction(raoul, <span class="number">2011</span>, <span class="number">400</span>),</span><br><span class="line">                <span class="keyword">new</span> Transaction(mario, <span class="number">2012</span>, <span class="number">710</span>),</span><br><span class="line">                <span class="keyword">new</span> Transaction(mario, <span class="number">2012</span>, <span class="number">700</span>),</span><br><span class="line">                <span class="keyword">new</span> Transaction(alan, <span class="number">2012</span>, <span class="number">950</span>)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//找出2011年发生的所有交易，并按交易额排序（从低到高）</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        transactions.stream()</span><br><span class="line">                .filter(t -&gt; t.getYear() == <span class="number">2011</span>)</span><br><span class="line">                .sorted(Comparator.comparingInt(Transaction::getValue))</span><br><span class="line">                .forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//交易员都在哪些不同的城市工作过？</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        transactions.stream()</span><br><span class="line">                .map(t -&gt; t.getTrader().getCity())</span><br><span class="line">                .distinct()</span><br><span class="line">                .forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//查找所有来自剑桥的交易员，并按姓名排序</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        transactions.stream()</span><br><span class="line">                .map(Transaction::getTrader)</span><br><span class="line">                .filter(trader -&gt; trader.getCity().equals(<span class="string">"Cambridge"</span>))</span><br><span class="line">                .sorted(Comparator.comparing(Trader::getName))</span><br><span class="line">                .distinct()</span><br><span class="line">                .forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回所有交易员的姓名字符串，按字母排序</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        transactions.stream()</span><br><span class="line">                .map(t -&gt; t.getTrader().getName())</span><br><span class="line">                .sorted()</span><br><span class="line">                .forEach(System.out::println);</span><br><span class="line">        System.out.println(<span class="string">"---------------"</span>);</span><br><span class="line">        String reduce = transactions.stream()</span><br><span class="line">                .map(t -&gt; t.getTrader().getName())</span><br><span class="line">                .sorted()</span><br><span class="line">                .reduce(<span class="string">""</span>, String::concat);</span><br><span class="line">        System.out.println(reduce);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有没由交易员在米兰工作？</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> miLan = transactions.stream()</span><br><span class="line">                .anyMatch(t -&gt; t.getTrader().getCity().equals(<span class="string">"Milan"</span>));</span><br><span class="line">        System.out.println(miLan);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//打印生活在剑桥的交易员的所有交易额</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Optional&lt;Integer&gt; cambridge = transactions.stream()</span><br><span class="line">                .filter(t -&gt; t.getTrader().getCity().equals(<span class="string">"Cambridge"</span>))</span><br><span class="line">                .map(Transaction::getValue)</span><br><span class="line">                .reduce(Integer::sum);</span><br><span class="line">        System.out.println(cambridge.get());</span><br><span class="line"></span><br><span class="line">        Integer cambridge1 = transactions.stream()</span><br><span class="line">                .filter(t -&gt; t.getTrader().getCity().equals(<span class="string">"Cambridge"</span>))</span><br><span class="line">                .collect(Collectors.summingInt(Transaction::getValue));</span><br><span class="line">        System.out.println(cambridge1);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//所有交易中，最高的交易额是多少</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test7</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Optional&lt;Integer&gt; max = transactions.stream()</span><br><span class="line">                .map(Transaction::getValue)</span><br><span class="line">                .max(Integer::compare);</span><br><span class="line">        System.out.println(max.get());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//找到所有交易额最小的交易</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test8</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Optional&lt;Transaction&gt; min = transactions.stream()</span><br><span class="line">                .min(Comparator.comparingInt(Transaction::getValue));</span><br><span class="line">        System.out.println(min.get());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test9</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">100000</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">100000</span>; i++)&#123;</span><br><span class="line">            list.add((<span class="keyword">int</span>) (Math.random()*<span class="number">100000</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        Map&lt;Integer, Long&gt; collect = list.stream()</span><br><span class="line">                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));</span><br><span class="line"></span><br><span class="line">        System.out.println(collect);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 给定一个数字列表，如何返回一个由每个数的平方构成的列表呢？</span></span><br><span class="line"><span class="comment">     * 给定[1,2,3,4,5],应该返回[1,4,9,16,25]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Integer[] numArr = <span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="comment">//        Stream&lt;Integer&gt; numArr1 = Stream.of(numArr);</span></span><br><span class="line">        Stream&lt;Integer&gt; stream = Arrays.stream(numArr);</span><br><span class="line">        stream.map(x -&gt; x * x).forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//交易</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Transaction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Trader trader;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Transaction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Transaction</span><span class="params">(Trader trader, <span class="keyword">int</span> year, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.trader = trader;</span><br><span class="line">        <span class="keyword">this</span>.year = year;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Trader <span class="title">getTrader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> trader;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTrader</span><span class="params">(Trader trader)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.trader = trader;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getYear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> year;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setYear</span><span class="params">(<span class="keyword">int</span> year)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.year = year;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Transaction&#123;"</span> +</span><br><span class="line">                <span class="string">"trader="</span> + trader +</span><br><span class="line">                <span class="string">", year="</span> + year +</span><br><span class="line">                <span class="string">", value="</span> + value +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//交易员</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String city;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trader</span><span class="params">(String name, String city)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.city = city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCity</span><span class="params">(String city)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.city = city;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Trader&#123;"</span> +</span><br><span class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", city='"</span> + city + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java8新特性/" rel="tag"># Java8新特性</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/24/Lambda/" rel="next" title="Lambda">
+                <i class="fa fa-chevron-left"></i> Lambda
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg" alt="也许丶">
+            
+              <p class="site-author-name" itemprop="name">也许丶</p>
+              <div class="site-description motion-element" itemprop="description">把生命浪费在美好的事物上</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yexua" title="GitHub &rarr; https://github.com/yexua" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                大佬们QWQ
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github-yuteng.github.io/" title="https://github-yuteng.github.io/" rel="noopener" target="_blank">于腾</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Stream"><span class="nav-number">1.</span> <span class="nav-text">创建Stream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中间操作（Intermediate-Operation）"><span class="nav-number">2.</span> <span class="nav-text">中间操作（Intermediate Operation）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#筛选和切片"><span class="nav-number">2.1.</span> <span class="nav-text">筛选和切片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#映射"><span class="nav-number">2.2.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#排序"><span class="nav-number">2.3.</span> <span class="nav-text">排序</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#终止操作（Terminal-Operation）"><span class="nav-number">3.</span> <span class="nav-text">终止操作（Terminal Operation）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查找与匹配"><span class="nav-number">3.1.</span> <span class="nav-text">查找与匹配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#归约"><span class="nav-number">3.2.</span> <span class="nav-text">归约</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#收集"><span class="nav-number">3.3.</span> <span class="nav-text">收集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#API练习"><span class="nav-number">4.</span> <span class="nav-text">API练习</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">也许丶</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
