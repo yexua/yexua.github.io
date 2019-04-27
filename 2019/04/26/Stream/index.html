@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="也许丶">
 <meta property="og:description" content="Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，Stream API 提供了一种高效且易于使用的处理数据的方式。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-26T07:10:47.205Z">
+<meta property="og:updated_time" content="2019-04-26T12:06:48.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stream">
 <meta name="twitter:description" content="Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，Stream API 提供了一种高效且易于使用的处理数据的方式。">
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2019-04-26 14:40:05 / 修改时间：15:10:47" itemprop="dateCreated datePublished" datetime="2019-04-26T14:40:05+08:00">2019-04-26</time>
+              <time title="创建时间：2019-04-26 14:40:05 / 修改时间：20:06:48" itemprop="dateCreated datePublished" datetime="2019-04-26T14:40:05+08:00">2019-04-26</time>
             
 
             
@@ -597,21 +597,6 @@
 <td style="text-align:center">collect(Collector c)</td>
 <td style="text-align:center">将流转换为其他形式。接收一个 Collector接口的 实现，用于给Stream中元素做汇总的方法</td>
 </tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-</tr>
 </tbody>
 </table>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// toList List&lt;T&gt; 把流中元素收集到List</span></span><br><span class="line">List&lt;Employee&gt; emps= list.stream().collect(Collectors.toList()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// toSet Set&lt;T&gt; 把流中元素收集到Set</span></span><br><span class="line">Set&lt;Employee&gt; emps= list.stream().collect(Collectors.toSet()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// toCollection Collection&lt;T&gt; 把流中元素收集到创建的集合</span></span><br><span class="line">Collection&lt;Employee&gt;emps=list.stream().collect(Collectors.toCollection(ArrayList::<span class="keyword">new</span>)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// counting Long 计算流中元素的个数</span></span><br><span class="line"><span class="keyword">long</span> count = list.stream().collect(Collectors.counting()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// summingInt Integer 对流中元素的整数属性求和</span></span><br><span class="line">inttotal=list.stream().collect(Collectors.summingInt(Employee::getSalary)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// averagingInt Double 计算流中元素Integer属性的平均 值 </span></span><br><span class="line">doubleavg= list.stream().collect(Collectors.averagingInt(Employee::getSalary)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// summarizingInt IntSummaryStatistics 收集流中Integer属性的统计值。 如：平均值 </span></span><br><span class="line">IntSummaryStatisticsiss=list.stream().collect(Collectors.summarizingInt(Employee::getSalary));</span><br><span class="line"></span><br><span class="line"><span class="comment">// joining String 连接流中每个字符串 </span></span><br><span class="line">String str= list.stream().map(Employee::getName).collect(Collectors.joining());</span><br><span class="line"></span><br><span class="line"><span class="comment">// maxBy Optional&lt;T&gt; 根据比较器选择最大值 </span></span><br><span class="line">Optional&lt;Emp&gt; max = list.stream().collect(Collectors.maxBy(comparingInt(Employee::getSalary)));</span><br><span class="line"></span><br><span class="line"><span class="comment">// minBy Optional&lt;T&gt; 根据比较器选择最小值 </span></span><br><span class="line">Optional&lt;Emp&gt; min = list.stream().collect(Collectors.minBy(comparingInt(Employee::getSalary))); </span><br><span class="line"></span><br><span class="line"><span class="comment">// reducing 归约产生的类型 从一个作为累加器的初始值 开始，利用BinaryOperator与 流中元素逐个结合，从而归 约成单个值 </span></span><br><span class="line"><span class="keyword">int</span> total = list.stream().collect(Collectors.reducing(<span class="number">0</span>, Employee::getSalar, Integer::sum)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// collectingAndThen 转换函数返回的类型 包裹另一个收集器，对其结果转换函数 </span></span><br><span class="line"><span class="keyword">int</span> how = list.stream().collect(Collectors.collectingAndThen(Collectors.toList(), List::size)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// groupingBy Map&lt;K, List&lt;T&gt;&gt; 根据某属性值对流分组，属性为K，结果为V </span></span><br><span class="line">Map&lt;Emp.Status, List&lt;Emp&gt;&gt; map= list.stream() .collect(Collectors.groupingBy(Employee::getStatus)); </span><br><span class="line"></span><br><span class="line"><span class="comment">// partitioningBy Map&lt;Boolean, List&lt;T&gt;&gt; 根据true或false进行分区</span></span><br><span class="line">Map&lt;Boolean,List&lt;Emp&gt;&gt;vd=list.stream().collect(Collectors.partitioningBy(Employee::getManage));</span><br></pre></td></tr></table></figure>
@@ -661,6 +646,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/26/Optional容器/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -731,7 +720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -760,7 +749,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
