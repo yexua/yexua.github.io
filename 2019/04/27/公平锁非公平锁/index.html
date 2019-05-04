@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是等">
+  <meta name="description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是">
 <meta name="keywords" content="也许, Java, JVM, MySql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="也许丶">
 <meta property="og:url" content="https://yexua.github.io/2019/04/27/公平锁非公平锁/index.html">
 <meta property="og:site_name" content="也许丶">
-<meta property="og:description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是等">
+<meta property="og:description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-27T14:02:00.073Z">
+<meta property="og:updated_time" content="2019-05-04T11:36:21.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="也许丶">
-<meta name="twitter:description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是等">
+<meta name="twitter:description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是">
 
 
 
@@ -367,12 +367,24 @@
                 
               
 
-              <time title="创建时间：2019-04-27 22:01:48 / 修改时间：22:02:00" itemprop="dateCreated datePublished" datetime="2019-04-27T22:01:48+08:00">2019-04-27</time>
+              <time title="创建时间：2019-04-27 22:01:48" itemprop="dateCreated datePublished" datetime="2019-04-27T22:01:48+08:00">2019-04-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-04 19:36:21" itemprop="dateModified" datetime="2019-05-04T19:36:21+08:00">2019-05-04</time>
               
             
           </span>
@@ -424,7 +436,8 @@
       
 
       
-        <p> <strong>公平锁/非公平锁</strong><br>并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁<br>关于两者区别:<br>公平锁:  Threads acquire a fair lock in the order in which they requested it<br>公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是等待队列的第一.个，就占有锁，否则就会加入到等待队列中，以后会按照FIFO的规则从队列中取到自已<br>非公平锁: a nonfair lock permits barging: threads requesting a lock can jump ahead of the queue of waiting threads if the lockhappens to be available when it is requested.<br>非公平锁比较粗鲁，上来就 直接尝试占有锁，如果尝试失败，就再采用类似公平锁那种方式。</p>
+        <a id="more"></a>
+<p> <strong>公平锁/非公平锁</strong><br>并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁<br>关于两者区别:<br>公平锁:  Threads acquire a fair lock in the order in which they requested it<br>公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是等待队列的第一.个，就占有锁，否则就会加入到等待队列中，以后会按照FIFO的规则从队列中取到自已<br>非公平锁: a nonfair lock permits barging: threads requesting a lock can jump ahead of the queue of waiting threads if the lockhappens to be available when it is requested.<br>非公平锁比较粗鲁，上来就 直接尝试占有锁，如果尝试失败，就再采用类似公平锁那种方式。</p>
 <p>非公平锁的优点在于吞吐量比公平锁大。</p>
 <p>对于synchronized而言，也是一种非公平锁</p>
 <p>可重入锁（也叫递归锁）</p>
@@ -434,6 +447,11 @@
 <h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><p>是指尝试获取锁的线程不会立即阻塞，而是采用循环的方式去尝试获取锁，这样的好处是减少线程上下文切换的消耗，缺点是循环会消耗CPU</p>
 <h4 id="独占锁-写锁-共享锁-读锁-互斥锁"><a href="#独占锁-写锁-共享锁-读锁-互斥锁" class="headerlink" title="独占锁(写锁)/共享锁(读锁)/互斥锁"></a>独占锁(写锁)/共享锁(读锁)/互斥锁</h4><p>独占锁：指该锁一次之只能被一个线程所持有。对ReentrantLock/synchronized都是独占锁</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantReadWriteLock;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyCache</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> Map&lt;Integer, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> ReentrantReadWriteLock rwLock = <span class="keyword">new</span> ReentrantReadWriteLock();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(Integer key, Object value)</span></span>&#123;</span><br><span class="line">        rwLock.writeLock().lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t 正在写入："</span>+key);</span><br><span class="line">            TimeUnit.MILLISECONDS.sleep(<span class="number">300</span>);</span><br><span class="line">            map.put(key, value);</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t 写入完成"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            rwLock.writeLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">(Integer key)</span></span>&#123;</span><br><span class="line">        rwLock.readLock().lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t 正在读取"</span>);</span><br><span class="line">            TimeUnit.MILLISECONDS.sleep(<span class="number">300</span>);</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t 读取完成："</span>+ map.get(key));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            rwLock.readLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 多个线程同时读一个资源类没有任何问题，所以为了满足并发量，读取共享资源应该可以同时进行</span></span><br><span class="line"><span class="comment"> * 但是有一个线程想去写共享资源，就不因该再有其他线程可以对该资源进行读写</span></span><br><span class="line"><span class="comment"> * 总结：</span></span><br><span class="line"><span class="comment"> *      读-读能共存</span></span><br><span class="line"><span class="comment"> *      读-写不能共存</span></span><br><span class="line"><span class="comment"> *      写-写不能共存</span></span><br><span class="line"><span class="comment"> *      写操作：原子+独占，整个过程必须是一个完整的统一体，中间不许被分割，被打断</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadWriteLockDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyCache myCache = <span class="keyword">new</span> MyCache();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span> tempInt = i;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt; myCache.put(tempInt, tempInt),String.valueOf(i)).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span> tempInt = i;</span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt; myCache.get(tempInt),String.valueOf(i)).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="number">0</span>	 正在写入：<span class="number">0</span></span><br><span class="line"><span class="number">0</span>	 写入完成</span><br><span class="line"><span class="number">1</span>	 正在写入：<span class="number">1</span></span><br><span class="line"><span class="number">1</span>	 写入完成</span><br><span class="line"><span class="number">2</span>	 正在写入：<span class="number">2</span></span><br><span class="line"><span class="number">2</span>	 写入完成</span><br><span class="line"><span class="number">3</span>	 正在写入：<span class="number">3</span></span><br><span class="line"><span class="number">3</span>	 写入完成</span><br><span class="line"><span class="number">4</span>	 正在写入：<span class="number">4</span></span><br><span class="line"><span class="number">4</span>	 写入完成</span><br><span class="line"><span class="number">1</span>	 正在读取</span><br><span class="line"><span class="number">0</span>	 正在读取</span><br><span class="line"><span class="number">2</span>	 正在读取</span><br><span class="line"><span class="number">3</span>	 正在读取</span><br><span class="line"><span class="number">4</span>	 正在读取</span><br><span class="line"><span class="number">3</span>	 读取完成：<span class="number">3</span></span><br><span class="line"><span class="number">1</span>	 读取完成：<span class="number">1</span></span><br><span class="line"><span class="number">0</span>	 读取完成：<span class="number">0</span></span><br><span class="line"><span class="number">2</span>	 读取完成：<span class="number">2</span></span><br><span class="line"><span class="number">4</span>	 读取完成：<span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h4 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h4><p>让一些线程阻塞直到另一些线程完成一系列操作后才被唤醒</p>
+<p>CountDownLatch主要有两个方法，当一个或多个线程调用await方法时，调用线程会被阻塞。其他线程调用countDown方法会将计数器减1（调用countDown方法的线程不会阻塞），当计数器的值变为0时，因调用await方法被阻塞的线程会被唤醒，继续执行。</p>
+<h4 id="CyclicBarrier"><a href="#CyclicBarrier" class="headerlink" title="CyclicBarrier"></a>CyclicBarrier</h4><p>CyclicBarrier的字面意思是可循环（Cyclic）使用的屏障（Barrier）。他要做的事情就是，让一组线程到达一个屏障（也可以叫同步点）时被阻塞，知道最后一个线程到达屏障时，屏障才会开门，所有被屏障拦截的线程才会继续干活，线程进入屏障通过CyclicBarrier的await（）方法。</p>
+<h4 id="Semaphore"><a href="#Semaphore" class="headerlink" title="Semaphore"></a>Semaphore</h4><p>信号量主要用于两个目的，一个是用于多个共享资源的互斥使用，另一个用于并发线程的控制。</p>
+
       
     </div>
 
@@ -463,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/27/CAS/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2019/04/27/CAS/" rel="next" title="CAS">
+                <i class="fa fa-chevron-left"></i> CAS
               </a>
             
           </div>
@@ -472,6 +490,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/28/阻塞队列/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -542,7 +564,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -665,7 +687,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独占锁-写锁-共享锁-读锁-互斥锁"><span class="nav-number">2.</span> <span class="nav-text">独占锁(写锁)/共享锁(读锁)/互斥锁</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独占锁-写锁-共享锁-读锁-互斥锁"><span class="nav-number">2.</span> <span class="nav-text">独占锁(写锁)/共享锁(读锁)/互斥锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CountDownLatch"><span class="nav-number">3.</span> <span class="nav-text">CountDownLatch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">4.</span> <span class="nav-text">CyclicBarrier</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Semaphore"><span class="nav-number">5.</span> <span class="nav-text">Semaphore</span></a></li></ol></div>
             
 
           </div>
