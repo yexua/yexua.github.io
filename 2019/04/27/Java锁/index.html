@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是">
+  <meta name="description" content="Java提供了种类丰富的锁，每种锁因其特性的不同，在适当的场景下能够展现出非常高的效率。">
 <meta name="keywords" content="也许, Java, JVM, MySql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="也许丶">
-<meta property="og:url" content="https://yexua.github.io/2019/04/27/公平锁非公平锁/index.html">
+<meta property="og:title" content="Java锁">
+<meta property="og:url" content="https://yexua.github.io/2019/04/27/Java锁/index.html">
 <meta property="og:site_name" content="也许丶">
-<meta property="og:description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是">
+<meta property="og:description" content="Java提供了种类丰富的锁，每种锁因其特性的不同，在适当的场景下能够展现出非常高的效率。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-04T11:36:21.056Z">
+<meta property="og:updated_time" content="2019-05-04T13:01:16.554Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="也许丶">
-<meta name="twitter:description" content="公平锁/非公平锁并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁关于两者区别:公平锁:  Threads acquire a fair lock in the order in which they requested it公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是">
+<meta name="twitter:title" content="Java锁">
+<meta name="twitter:description" content="Java提供了种类丰富的锁，每种锁因其特性的不同，在适当的场景下能够展现出非常高的效率。">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://yexua.github.io/2019/04/27/公平锁非公平锁/">
+  <link rel="canonical" href="https://yexua.github.io/2019/04/27/Java锁/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title> | 也许丶</title>
+  <title>Java锁 | 也许丶</title>
   
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/27/公平锁非公平锁/">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/27/Java锁/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="也许丶">
@@ -341,7 +341,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">Java锁
 
               
             
@@ -384,7 +384,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-04 19:36:21" itemprop="dateModified" datetime="2019-05-04T19:36:21+08:00">2019-05-04</time>
+                <time title="修改时间：2019-05-04 21:01:16" itemprop="dateModified" datetime="2019-05-04T21:01:16+08:00">2019-05-04</time>
               
             
           </span>
@@ -436,7 +436,8 @@
       
 
       
-        <a id="more"></a>
+        <p>Java提供了种类丰富的锁，每种锁因其特性的不同，在适当的场景下能够展现出非常高的效率。</p>
+<a id="more"></a>
 <p> <strong>公平锁/非公平锁</strong><br>并发包中ReentrantL ock的创建可以指定构造函数的boolean类型来得到公平锁或非公平锁，默认是非公平锁<br>关于两者区别:<br>公平锁:  Threads acquire a fair lock in the order in which they requested it<br>公平锁，就是很公平，在并发环境中，每个线程在获取锁时会先查看此锁维护的等待队列，如果为空，或者当前线程是等待队列的第一.个，就占有锁，否则就会加入到等待队列中，以后会按照FIFO的规则从队列中取到自已<br>非公平锁: a nonfair lock permits barging: threads requesting a lock can jump ahead of the queue of waiting threads if the lockhappens to be available when it is requested.<br>非公平锁比较粗鲁，上来就 直接尝试占有锁，如果尝试失败，就再采用类似公平锁那种方式。</p>
 <p>非公平锁的优点在于吞吐量比公平锁大。</p>
 <p>对于synchronized而言，也是一种非公平锁</p>
@@ -491,8 +492,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/28/阻塞队列/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/28/阻塞队列/" rel="prev" title="阻塞队列">
+                阻塞队列 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -620,7 +621,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

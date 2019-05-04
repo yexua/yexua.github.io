@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。 主要特点：线程复用、控制最大并发数、管理线程。  第一:降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。第二:提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。第三:提高线程的可管理">
+  <meta name="description" content="线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。">
 <meta name="keywords" content="也许, Java, JVM, MySql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="也许丶">
+<meta property="og:title" content="线程池">
 <meta property="og:url" content="https://yexua.github.io/2019/04/29/线程池/index.html">
 <meta property="og:site_name" content="也许丶">
-<meta property="og:description" content="线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。 主要特点：线程复用、控制最大并发数、管理线程。  第一:降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。第二:提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。第三:提高线程的可管理">
+<meta property="og:description" content="线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-29T14:04:27.499Z">
+<meta property="og:updated_time" content="2019-05-04T12:56:14.091Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="也许丶">
-<meta name="twitter:description" content="线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。 主要特点：线程复用、控制最大并发数、管理线程。  第一:降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。第二:提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。第三:提高线程的可管理">
+<meta name="twitter:title" content="线程池">
+<meta name="twitter:description" content="线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title> | 也许丶</title>
+  <title>线程池 | 也许丶</title>
   
 
 
@@ -341,7 +341,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">线程池
 
               
             
@@ -367,12 +367,24 @@
                 
               
 
-              <time title="创建时间：2019-04-29 13:58:25 / 修改时间：22:04:27" itemprop="dateCreated datePublished" datetime="2019-04-29T13:58:25+08:00">2019-04-29</time>
+              <time title="创建时间：2019-04-29 13:58:04" itemprop="dateCreated datePublished" datetime="2019-04-29T13:58:04+08:00">2019-04-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-04 20:56:14" itemprop="dateModified" datetime="2019-05-04T20:56:14+08:00">2019-05-04</time>
               
             
           </span>
@@ -407,6 +419,7 @@
 
       
         <p>线程池做的工作主要是控制运行的线程的数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超出数量的线程排队等候，等其他线程执行完毕，再从队列中取出来执行。</p>
+<a id="more"></a>
 <p>主要特点：线程复用、控制最大并发数、管理线程。</p>
 <p> 第一:降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。第二:提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。<br>第三:提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统的分配， 调优和监控</p>
 <h4 id="线程池参数"><a href="#线程池参数" class="headerlink" title="线程池参数"></a>线程池参数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> corePoolSize;</span><br><span class="line">线程池中的常驻核心线程数</span><br></pre></td></tr></table></figure>
@@ -445,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/28/阻塞队列/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2019/04/28/阻塞队列/" rel="next" title="阻塞队列">
+                <i class="fa fa-chevron-left"></i> 阻塞队列
               </a>
             
           </div>
@@ -580,7 +593,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
