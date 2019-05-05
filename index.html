@@ -324,6 +324,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/05/05/synchronized和Lock区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="也许丶">
+      <meta itemprop="description" content="把生命浪费在美好的事物上">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="也许丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/05/synchronized和Lock区别/" class="post-title-link" itemprop="url">synchronized和Lock区别</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-05 14:29:41 / 修改时间：15:58:26" itemprop="dateCreated datePublished" datetime="2019-05-05T14:29:41+08:00">2019-05-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>并发编程中，锁是经常需要用到的，我们了解一下synchronized和lock的区别</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/05/synchronized和Lock区别/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/29/线程池/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -386,7 +535,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-04 20:56:14" itemprop="dateModified" datetime="2019-05-04T20:56:14+08:00">2019-05-04</time>
+                <time title="修改时间：2019-05-05 20:11:35" itemprop="dateModified" datetime="2019-05-05T20:11:35+08:00">2019-05-05</time>
               
             
           </span>
@@ -547,7 +696,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-04 20:57:46" itemprop="dateModified" datetime="2019-05-04T20:57:46+08:00">2019-05-04</time>
+                <time title="修改时间：2019-05-05 17:21:21" itemprop="dateModified" datetime="2019-05-05T17:21:21+08:00">2019-05-05</time>
               
             
           </span>
@@ -587,13 +736,15 @@
 <p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g2ihzotliej311j0fxgsc.jpg" alt="阻塞队列"></p>
 <p>当阻塞队列是空时，从队列中获取元素的操作将会被阻塞</p>
 <p>当阻塞队列时满时，往队列里添加元素的操作将会被阻塞</p>
+<h4 id="阻塞队列有什么好处"><a href="#阻塞队列有什么好处" class="headerlink" title="阻塞队列有什么好处"></a>阻塞队列有什么好处</h4><p>在多线程领域：所谓阻塞，在某些情况下，会挂起线程（即阻塞），一旦条件满足，被挂起的线程又会自动被唤醒</p>
 <p><strong>ArrayBlockingQueue:由数狙结构組成的有界阻塞队列。</strong></p>
-<p><strong>LinkedBlockingQueue:由链表构狙成的有界(但大小默人値カInteger.MAX_ _VALUE)阻塞队列</strong>PriorityBlockingQueue:支持优先级排序的无界阻塞叺列。</p>
-<p>DelayQueue:使用优先级队列实现的延迟无界阻塞臥列。</p>
-<p><strong>synchronousQueue:不存储元素的阻塞队列，也即単个元素的队列</strong></p>
-<p>linkedTransferQueue:由链表结构組成的无界阻塞队列。</p>
+<p><strong>LinkedBlockingQueue:由链表构狙成的有界(但大小默人値カInteger.MAX_ _VALUE)阻塞队列</strong></p>
+<p><strong>SynchronousQueue:不存储元素的阻塞队列，也即単个元素的队列</strong></p>
+<p>PriorityBlockingQueue:支持优先级排序的无界阻塞叺列</p>
+<p>DelayQueue:使用优先级队列实现的延迟无界阻塞臥列</p>
+<p>linkedTransferQueue:由链表结构組成的无界阻塞队列</p>
 <p>LinkedBlockingDeque:由链表结构組成的双向阻塞队列</p>
-<p>ArrayBlockingQueue</p>
+<p>阻塞队列提供了四种处理方法:</p>
 <table>
 <thead>
 <tr>
@@ -607,27 +758,34 @@
 <tbody>
 <tr>
 <td style="text-align:center">插入</td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">add(e)</td>
+<td style="text-align:center">offer(e)</td>
+<td style="text-align:center">put(e)</td>
+<td style="text-align:center">offer(e,time,unit)</td>
 </tr>
 <tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">移除</td>
+<td style="text-align:center">remove()</td>
+<td style="text-align:center">poll()</td>
+<td style="text-align:center">take()</td>
+<td style="text-align:center">poll(time,unit)</td>
 </tr>
 <tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">检查</td>
+<td style="text-align:center">element()</td>
+<td style="text-align:center">peek()</td>
+<td style="text-align:center">不可用</td>
+<td style="text-align:center">不可用</td>
 </tr>
 </tbody>
 </table>
-
+<ul>
+<li>抛出异常：是指当阻塞队列满时候，再往队列里插入元素，会抛出 IllegalStateException(“Queue full”) 异常。当队列为空时，从队列里获取元素时会抛出 NoSuchElementException 异常 。</li>
+<li>返回特殊值：插入方法会返回是否成功，成功则返回 true。移除方法，则是从队列里拿出一个元素，如果没有则返回 null</li>
+<li>一直阻塞：当阻塞队列满时，如果生产者线程往队列里 put 元素，队列会一直阻塞生产者线程，直到拿到数据，或者响应中断退出。当队列空时，消费者线程试图从队列里 take 元素，队列也会阻塞消费者线程，直到队列可用。</li>
+<li>超时退出：当阻塞队列满时，队列会阻塞生产者线程一段时间，如果超过一定的时间，生产者线程就会退出。</li>
+</ul>
+<h4 id="线程通信之生产者消费者阻塞队列"><a href="#线程通信之生产者消费者阻塞队列" class="headerlink" title="线程通信之生产者消费者阻塞队列"></a>线程通信之生产者消费者阻塞队列</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.ArrayBlockingQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.BlockingQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProdConsumer_BlockQueue</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        MyResource myResource = <span class="keyword">new</span> MyResource(<span class="keyword">new</span> ArrayBlockingQueue&lt;&gt;(<span class="number">10</span>));</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t生产线程启动"</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                myResource.myProd();</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"Prod"</span>).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t消费线程启动"</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                myResource.myConsumer();</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"Consumer"</span>).start();</span><br><span class="line"></span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"\t 主线程叫停FLAG=false，生产动作结束"</span>);</span><br><span class="line">        myResource.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyResource</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> FLAG = <span class="keyword">true</span>;<span class="comment">//默认开启，进行生产+消费</span></span><br><span class="line">    <span class="keyword">private</span> AtomicInteger atomicInteger = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    BlockingQueue&lt;String&gt; blockingQueue = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyResource</span><span class="params">(BlockingQueue&lt;String&gt; blockingQueue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.blockingQueue = blockingQueue;</span><br><span class="line">        System.out.println(blockingQueue.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myProd</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        String data;</span><br><span class="line">        <span class="keyword">boolean</span> retValue;</span><br><span class="line">        <span class="keyword">while</span>(FLAG)&#123;</span><br><span class="line">            data = atomicInteger.incrementAndGet() + <span class="string">""</span>;</span><br><span class="line">            retValue = blockingQueue.offer(data, <span class="number">2L</span>, TimeUnit.SECONDS);</span><br><span class="line">            <span class="keyword">if</span>(retValue)&#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t 插入队列"</span>+data+<span class="string">"成功"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t 插入队列"</span>+data+<span class="string">"失败"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"/ FLAG = false,生产结束"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myConsumer</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">        String result;</span><br><span class="line">        <span class="keyword">while</span>(FLAG)&#123;</span><br><span class="line">            result = blockingQueue.poll(<span class="number">2L</span>, TimeUnit.SECONDS);</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">null</span> == result || result.equalsIgnoreCase(<span class="string">""</span>))&#123;</span><br><span class="line">                FLAG = <span class="keyword">false</span>;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">"\t 超过2秒没有消费成功，消费退出"</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">"\t消费队列"</span> + result + <span class="string">"成功"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span></span>&#123;</span><br><span class="line">        FLAG =<span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line">Prod	生产线程启动</span><br><span class="line">Consumer	消费线程启动</span><br><span class="line">Prod	 插入队列<span class="number">1</span>成功</span><br><span class="line">Consumer	消费队列<span class="number">1</span>成功</span><br><span class="line">Consumer	消费队列<span class="number">2</span>成功</span><br><span class="line">Prod	 插入队列<span class="number">2</span>成功</span><br><span class="line">Consumer	消费队列<span class="number">3</span>成功</span><br><span class="line">Prod	 插入队列<span class="number">3</span>成功</span><br><span class="line">Prod	 插入队列<span class="number">4</span>成功</span><br><span class="line">Consumer	消费队列<span class="number">4</span>成功</span><br><span class="line">Prod	 插入队列<span class="number">5</span>成功</span><br><span class="line">Consumer	消费队列<span class="number">5</span>成功</span><br><span class="line">main	 主线程叫停FLAG=<span class="keyword">false</span>，生产动作结束</span><br><span class="line">Prod	 FLAG = <span class="keyword">false</span>,生产结束</span><br><span class="line">Consumer	 超过<span class="number">2</span>秒没有消费成功，消费退出</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1818,173 +1976,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yexua.github.io/2019/04/22/关键字final与volatile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="也许丶">
-      <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="也许丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/22/关键字final与volatile/" class="post-title-link" itemprop="url">关键字final与volatile</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-22 15:21:02 / 修改时间：15:59:11" itemprop="dateCreated datePublished" datetime="2019-04-22T15:21:02+08:00">2019-04-22</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java基础/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本篇学习关键字final和volatile</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/22/关键字final与volatile/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2033,7 +2024,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2091,7 +2082,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
