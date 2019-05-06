@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0plvvddyaj30jj06dt9o.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pm8eesbjj30yt0nkgpq.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pm9arkdaj30yq0b3wmj.jpg">
-<meta property="og:updated_time" content="2019-04-09T08:35:21.711Z">
+<meta property="og:updated_time" content="2019-05-06T09:49:09.662Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垃圾收集器和内存分配策略(一)">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0ppfgya99j30m80ewaa7.jpg">
@@ -392,7 +392,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-09 16:35:21" itemprop="dateModified" datetime="2019-04-09T16:35:21+08:00">2019-04-09</time>
+                <time title="修改时间：2019-05-06 17:49:09" itemprop="dateModified" datetime="2019-05-06T17:49:09+08:00">2019-05-06</time>
               
             
           </span>
@@ -489,7 +489,7 @@
 <li>虚引用(Phantom Reference)</li>
 </ul>
 <p>这四种引用的强度依次递减。</p>
-<h3 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h3><p>强引用就是指在程序代码中普遍存在的，类似<code>Object obj = new Object()</code>这类似的引用，只要强引用在，垃圾搜集器永远不会搜集被引用的对象。也就是说，宁愿出现内存溢出，也不会回收这些对象。</p>
+<h3 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h3><p>强引用就是指在程序代码中普遍存在的，类似<code>Object obj = new Object()</code>这类似的引用，只要强引用在，垃圾搜集器永远不会搜集被引用的对象。也就是说，宁愿出现内存溢出，也不会回收这些对象。因此强引用是造成Java内存泄漏的主要原因之一。</p>
 <h3 id="软引用"><a href="#软引用" class="headerlink" title="软引用"></a>软引用</h3><p>软引用是用来描述一些有用但并不是必需的对象，在Java中用<code>java.lang.ref.SoftReference</code>类来表示。对于软引用关联着的对象，只有在内存不足的时候JVM才会回收该对象。因此，这一点可以很好地用来解决OOM的问题，并且这个特性很适合用来实现缓存：比如网页缓存、图片缓存等。</p>
 <h3 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h3><p>弱引用也是用来描述非必需对象的，当JVM进行垃圾回收时，无论内存是否充足，都会回收被弱引用关联的对象。在java中，用<code>java.lang.ref.WeakReference</code>类来表示。</p>
 <h3 id="虚引用"><a href="#虚引用" class="headerlink" title="虚引用"></a>虚引用</h3><p>虚引用和前面的软引用、弱引用不同，它并不影响对象的生命周期。在java中用<code>java.lang.ref.PhantomReference</code>类表示。如果一个对象与虚引用关联，则跟没有引用与之关联一样，在任何时候都可能被垃圾回收器回收。<br>要注意的是，虚引用必须和引用队列关联使用，当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会把这个虚引用加入到与之 关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
@@ -769,7 +769,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

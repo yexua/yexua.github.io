@@ -1654,6 +1654,11 @@ pre .javascript .function {
   color: #eee;
   border-bottom-color: #eee;
 }
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+}
 .sidebar-inner {
   position: relative;
   padding: 20px 10px;
@@ -1697,8 +1702,9 @@ pre .javascript .function {
   background: #87daff;
 }
 @media (max-width: 991px) {
-  .sidebar-toggle {
-    display: none;
+  .sidebar-toggle .sidebar-toggle {
+    opacity: 0.8;
+    right: 20px;
   }
 }
 .sidebar-toggle-line {
@@ -1764,7 +1770,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #47e2f2;
+  background: #147436;
 }
 .feed-link,
 .chat {
