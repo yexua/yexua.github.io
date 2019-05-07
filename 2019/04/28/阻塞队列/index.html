@@ -96,19 +96,19 @@
 
 
 
-  <meta name="description" content="阻塞队列，是一个队列，而在一个阻塞队列在数据结构中所起的作用大致如下图所示  当阻塞队列是空时，从队列中获取元素的操作将会被阻塞 当阻塞队列时满时，往队列里添加元素的操作将会被阻塞 阻塞队列有什么好处在多线程领域：所谓阻塞，在某些情况下，会挂起线程（即阻塞），一旦条件满足，被挂起的线程又会自动被唤醒 ArrayBlockingQueue:由数狙结构組成的有界阻塞队列。 LinkedBlocking">
+  <meta name="description" content="当我们要创建ThreadPoolExecutor的时候需要传进来一个类型为BlockingQueue的参数，它就是阻塞队列，在这一篇文章里我们会介绍阻塞队列的定义、种类、实现原理以及应用。">
 <meta name="keywords" content="并发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阻塞队列">
 <meta property="og:url" content="https://yexua.github.io/2019/04/28/阻塞队列/index.html">
 <meta property="og:site_name" content="也许丶">
-<meta property="og:description" content="阻塞队列，是一个队列，而在一个阻塞队列在数据结构中所起的作用大致如下图所示  当阻塞队列是空时，从队列中获取元素的操作将会被阻塞 当阻塞队列时满时，往队列里添加元素的操作将会被阻塞 阻塞队列有什么好处在多线程领域：所谓阻塞，在某些情况下，会挂起线程（即阻塞），一旦条件满足，被挂起的线程又会自动被唤醒 ArrayBlockingQueue:由数狙结构組成的有界阻塞队列。 LinkedBlocking">
+<meta property="og:description" content="当我们要创建ThreadPoolExecutor的时候需要传进来一个类型为BlockingQueue的参数，它就是阻塞队列，在这一篇文章里我们会介绍阻塞队列的定义、种类、实现原理以及应用。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g2ihzotliej311j0fxgsc.jpg">
-<meta property="og:updated_time" content="2019-05-06T09:44:13.701Z">
+<meta property="og:updated_time" content="2019-05-07T09:18:45.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阻塞队列">
-<meta name="twitter:description" content="阻塞队列，是一个队列，而在一个阻塞队列在数据结构中所起的作用大致如下图所示  当阻塞队列是空时，从队列中获取元素的操作将会被阻塞 当阻塞队列时满时，往队列里添加元素的操作将会被阻塞 阻塞队列有什么好处在多线程领域：所谓阻塞，在某些情况下，会挂起线程（即阻塞），一旦条件满足，被挂起的线程又会自动被唤醒 ArrayBlockingQueue:由数狙结构組成的有界阻塞队列。 LinkedBlocking">
+<meta name="twitter:description" content="当我们要创建ThreadPoolExecutor的时候需要传进来一个类型为BlockingQueue的参数，它就是阻塞队列，在这一篇文章里我们会介绍阻塞队列的定义、种类、实现原理以及应用。">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g2ihzotliej311j0fxgsc.jpg">
 
 
@@ -386,7 +386,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-06 17:44:13" itemprop="dateModified" datetime="2019-05-06T17:44:13+08:00">2019-05-06</time>
+                <time title="修改时间：2019-05-07 17:18:45" itemprop="dateModified" datetime="2019-05-07T17:18:45+08:00">2019-05-07</time>
               
             
           </span>
@@ -420,7 +420,9 @@
       
 
       
-        <p>阻塞队列，是一个队列，而在一个阻塞队列在数据结构中所起的作用大致如下图所示</p>
+        <p>当我们要创建ThreadPoolExecutor的时候需要传进来一个类型为BlockingQueue的参数，它就是阻塞队列，在这一篇文章里我们会介绍阻塞队列的定义、种类、实现原理以及应用。</p>
+<a id="more"></a>
+<p>阻塞队列，是一个队列，而在一个阻塞队列在数据结构中所起的作用大致如下图所示</p>
 <p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g2ihzotliej311j0fxgsc.jpg" alt="阻塞队列"></p>
 <p>当阻塞队列是空时，从队列中获取元素的操作将会被阻塞</p>
 <p>当阻塞队列时满时，往队列里添加元素的操作将会被阻塞</p>
@@ -652,7 +654,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

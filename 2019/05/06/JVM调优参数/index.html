@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="XX参数1-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。默认-XX:SurvivorRatio=8, 即Eden:S0:S1 = 8:1:1 我们设置JVM参数为：-XX:+PrintGCDetails -XX:+UseSerialGC -Xms10m -Xmx10m 12345 ...  eden space 2752K,   from space 3">
+  <meta name="description" content="本文介绍JVM调优常见参数">
 <meta name="keywords" content="也许, Java, JVM, MySql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="也许丶">
+<meta property="og:title" content="JVM调优参数">
 <meta property="og:url" content="https://yexua.github.io/2019/05/06/JVM调优参数/index.html">
 <meta property="og:site_name" content="也许丶">
-<meta property="og:description" content="XX参数1-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。默认-XX:SurvivorRatio=8, 即Eden:S0:S1 = 8:1:1 我们设置JVM参数为：-XX:+PrintGCDetails -XX:+UseSerialGC -Xms10m -Xmx10m 12345 ...  eden space 2752K,   from space 3">
+<meta property="og:description" content="本文介绍JVM调优常见参数">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-06T09:40:53.172Z">
+<meta property="og:updated_time" content="2019-05-07T09:20:14.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="也许丶">
-<meta name="twitter:description" content="XX参数1-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。默认-XX:SurvivorRatio=8, 即Eden:S0:S1 = 8:1:1 我们设置JVM参数为：-XX:+PrintGCDetails -XX:+UseSerialGC -Xms10m -Xmx10m 12345 ...  eden space 2752K,   from space 3">
+<meta name="twitter:title" content="JVM调优参数">
+<meta name="twitter:description" content="本文介绍JVM调优常见参数">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title> | 也许丶</title>
+  <title>JVM调优参数 | 也许丶</title>
   
 
 
@@ -341,7 +341,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">JVM调优参数
 
               
             
@@ -367,16 +367,46 @@
                 
               
 
-              <time title="创建时间：2019-05-06 16:08:34 / 修改时间：17:40:53" itemprop="dateCreated datePublished" datetime="2019-05-06T16:08:34+08:00">2019-05-06</time>
+              <time title="创建时间：2019-05-06 22:01:48" itemprop="dateCreated datePublished" datetime="2019-05-06T22:01:48+08:00">2019-05-06</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-07 17:20:14" itemprop="dateModified" datetime="2019-05-07T17:20:14+08:00">2019-05-07</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -406,7 +436,9 @@
       
 
       
-        <h4 id="XX参数"><a href="#XX参数" class="headerlink" title="XX参数"></a>XX参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。默认-XX:SurvivorRatio=8, 即Eden:S0:S1 = 8:1:1</span><br></pre></td></tr></table></figure>
+        <p>本文介绍JVM调优常见参数</p>
+<a id="more"></a>
+<h4 id="XX参数"><a href="#XX参数" class="headerlink" title="XX参数"></a>XX参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。默认-XX:SurvivorRatio=8, 即Eden:S0:S1 = 8:1:1</span><br></pre></td></tr></table></figure>
 <p>我们设置JVM参数为：<code>-XX:+PrintGCDetails -XX:+UseSerialGC -Xms10m -Xmx10m</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> ...</span><br><span class="line">  eden space <span class="number">2752</span>K, </span><br><span class="line">  from space <span class="number">320</span>K,</span><br><span class="line">  to   space <span class="number">320</span>K, </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>从输出信息可以看出，<code>eden space 2752K from space 320K to space 320K</code> ，320*8≈2752，8:1:1并不是非常准确的比例</p>
@@ -462,8 +494,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/06/Redis/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/07/Redis/" rel="prev" title="Redis">
+                Redis <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -595,7 +627,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
