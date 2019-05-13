@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="也许丶">
 <meta property="og:description" content="非关系性数据库NoSQL:Redis">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-07T09:17:07.855Z">
+<meta property="og:updated_time" content="2019-05-07T13:46:51.041Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis">
 <meta name="twitter:description" content="非关系性数据库NoSQL:Redis">
@@ -329,7 +329,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="也许丶">
       <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+      <meta itemprop="image" content="https://i.loli.net/2019/05/10/5cd537e9744ba.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2019-05-07 09:45:02 / 修改时间：17:17:07" itemprop="dateCreated datePublished" datetime="2019-05-07T09:45:02+08:00">2019-05-07</time>
+              <time title="创建时间：2019-05-07 09:45:02 / 修改时间：21:46:51" itemprop="dateCreated datePublished" datetime="2019-05-07T09:45:02+08:00">2019-05-07</time>
             
 
             
@@ -781,7 +781,43 @@
 <li><strong>Watch指令，类似乐观锁，事务提交时，如果Key的值已被别的客户端改变，整个事务队列都不会被执行。</strong></li>
 <li>通过WATCH命令在事务执行之前监控了多个Keys，倘若在WATCH之后有任何Key的值发生了变化，EXEC命令执行的事务都将被放弃，同时返回Nullmulti-bulk应答以通知调用者事务执行失败。</li>
 </ul>
-<h4 id="Redis-的复制-Master-Slave"><a href="#Redis-的复制-Master-Slave" class="headerlink" title="Redis 的复制(Master/Slave)"></a>Redis 的复制(Master/Slave)</h4>
+<h4 id="Redis-的复制-Master-Slave"><a href="#Redis-的复制-Master-Slave" class="headerlink" title="Redis 的复制(Master/Slave)"></a>Redis 的复制(Master/Slave)</h4><ul>
+<li>主从复制 读写分离 容灾恢复。<strong>配从不配主</strong></li>
+<li>主机数据更新后根据配置和策略，自动同步到备机的 master/slaver 机制，Master以写为主，Slave以读为主。</li>
+<li>info replication 查看 role 角色。</li>
+</ul>
+<h5 id="一主二仆"><a href="#一主二仆" class="headerlink" title="一主二仆"></a>一主二仆</h5><p><strong>info replication：</strong> 返回主从复制的信息。主机才可以写，从机只能读。</p>
+<p>从库配置：slaveof 主库IP 主库端口 <code>slaveof 127.0.0.1 6379</code></p>
+<ul>
+<li>如果 master shutdown 后，从库 role 还是 slave。 master 恢复上线，关系也恢复。</li>
+<li>每次 slave shutdown 与 master 断开之后，都需要重新连接，除非你配置进redis.conf文件。<ul>
+<li>从库每次 slave shutdown 后 role 变为 master。</li>
+</ul>
+</li>
+<li>info replication 查看 role 角色。</li>
+</ul>
+<h5 id="薪火相传"><a href="#薪火相传" class="headerlink" title="薪火相传"></a>薪火相传</h5><p>上一个 Slave 可以是下一个 Slave 的 Master，Slave 同样可以接收其他 slaves 的连接和同步请求。减轻主 Master 压力。</p>
+<ul>
+<li><strong>中途变更转向：会清除之前的数据，重新建立拷贝最新的。</strong></li>
+<li>slaveof 新主库IP 新主库端口 <code>slaveof 127.0.0.1 6379</code></li>
+</ul>
+<h5 id="反客为主"><a href="#反客为主" class="headerlink" title="反客为主"></a>反客为主</h5><p>上一个 Slave 可以是下一个 Slave 的 Master，Slave 同样可以接收其他 slaves 的连接和同步请求。减轻主 Master 压力。</p>
+<ul>
+<li><strong>中途变更转向：会清除之前的数据，重新建立拷贝最新的。</strong></li>
+<li>slaveof 新主库IP 新主库端口 <code>slaveof 127.0.0.1 6379</code></li>
+</ul>
+<h5 id="哨兵模式-反客为主自动版本"><a href="#哨兵模式-反客为主自动版本" class="headerlink" title="哨兵模式(反客为主自动版本)"></a><strong>哨兵模式</strong>(反客为主自动版本)</h5><ul>
+<li>能够<strong>后台自动监控主机是否故障</strong>，如果故障了根据投票数自动将从库转换为主库。</li>
+</ul>
+<p><strong>原有体系 主仆关系</strong><br>1、新建一个文件名为 sentinel.conf 空 配置文件。<br>2、配置 sentinel.conf文件。写入 <code>sentinel monitor 被监控数据库名字 127.0.0.1 6379 1</code></p>
+<ul>
+<li>上面最后一个数字1，表示主机挂掉后 salve 投票看让谁接替成为主机，得票数多成为主机。<br>3、启用 <code>redis-sentinel /myredis/sentinel.conf</code> 监控。<br>4、如果 主Master shutdown 以后，salve 投票多的选为 新Master，而剩余 salve 转向 新Master。<br>5、<strong>即便 主Master恢复，原来的体系已经建立，由于监控则变成新Master 的 salve</strong><br>6、一组sentinel能同时监控多个Master。</li>
+</ul>
+<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><ul>
+<li>由于所有的写操作都是先在Master上操作，然后同步更新到Slave上，</li>
+<li>所以从Master同步到Slave机器有一定的延迟，当系统很繁忙的时候，延迟问题会更加严重，Slave机器数量的增加也会使这个问题更加严重。</li>
+</ul>
+
       
     </div>
 
@@ -826,6 +862,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/08/NIO/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -883,7 +923,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg" alt="也许丶">
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2019/05/10/5cd537e9744ba.jpg" alt="也许丶">
             
               <p class="site-author-name" itemprop="name">也许丶</p>
               <div class="site-description motion-element" itemprop="description">把生命浪费在美好的事物上</div>
@@ -896,7 +936,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1025,7 +1065,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#CAP-BASE"><span class="nav-number">1.</span> <span class="nav-text">CAP+BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#传统的ACID"><span class="nav-number">1.1.</span> <span class="nav-text">传统的ACID</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAP"><span class="nav-number">1.2.</span> <span class="nav-text">CAP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAP的3进2"><span class="nav-number">1.3.</span> <span class="nav-text">CAP的3进2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BASE"><span class="nav-number">1.4.</span> <span class="nav-text">BASE</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis的特点"><span class="nav-number">2.</span> <span class="nav-text">Redis的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis基础知识"><span class="nav-number">3.</span> <span class="nav-text">Redis基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis数据类型"><span class="nav-number">4.</span> <span class="nav-text">Redis数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Redis-键-key"><span class="nav-number">4.1.</span> <span class="nav-text">Redis 键(key)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#String（字符串）"><span class="nav-number">4.2.</span> <span class="nav-text">String（字符串）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hash（哈希，类似Java里的Map）"><span class="nav-number">4.3.</span> <span class="nav-text">hash（哈希，类似Java里的Map）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#list（列表）"><span class="nav-number">4.4.</span> <span class="nav-text">list（列表）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#set（集合）"><span class="nav-number">4.5.</span> <span class="nav-text">set（集合）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zset-sorted-set：有序集合"><span class="nav-number">4.6.</span> <span class="nav-text">zset(sorted set：有序集合)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-conf配置文件"><span class="nav-number">5.</span> <span class="nav-text">redis.conf配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#GENERAL-通用"><span class="nav-number">5.1.</span> <span class="nav-text">GENERAL 通用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SNAPSHOTTING快照"><span class="nav-number">5.2.</span> <span class="nav-text">SNAPSHOTTING快照</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SECURITY-安全"><span class="nav-number">5.3.</span> <span class="nav-text">SECURITY 安全</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LIMITS-限制"><span class="nav-number">5.4.</span> <span class="nav-text">LIMITS 限制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久化"><span class="nav-number">6.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RDB（Redis-DataBase）"><span class="nav-number">6.1.</span> <span class="nav-text">RDB（Redis DataBase）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#优势"><span class="nav-number">6.1.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#修复"><span class="nav-number">6.1.2.</span> <span class="nav-text">修复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#停止"><span class="nav-number">6.1.3.</span> <span class="nav-text">停止</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AOF"><span class="nav-number">6.2.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#启用AOF"><span class="nav-number">6.2.1.</span> <span class="nav-text">启用AOF</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#文件路径和名称"><span class="nav-number">6.2.2.</span> <span class="nav-text">文件路径和名称</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#可靠性"><span class="nav-number">6.2.3.</span> <span class="nav-text">可靠性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#日志重写"><span class="nav-number">6.2.4.</span> <span class="nav-text">日志重写</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#数据损坏修复"><span class="nav-number">6.2.5.</span> <span class="nav-text">数据损坏修复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#优点"><span class="nav-number">6.2.6.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#缺点"><span class="nav-number">6.2.7.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#小结"><span class="nav-number">6.3.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#同时开启两种持久化方式"><span class="nav-number">6.3.1.</span> <span class="nav-text">同时开启两种持久化方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#性能建议"><span class="nav-number">6.3.2.</span> <span class="nav-text">性能建议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis事务"><span class="nav-number">7.</span> <span class="nav-text">Redis事务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令"><span class="nav-number">7.1.</span> <span class="nav-text">命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-的复制-Master-Slave"><span class="nav-number">8.</span> <span class="nav-text">Redis 的复制(Master/Slave)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#CAP-BASE"><span class="nav-number">1.</span> <span class="nav-text">CAP+BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#传统的ACID"><span class="nav-number">1.1.</span> <span class="nav-text">传统的ACID</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAP"><span class="nav-number">1.2.</span> <span class="nav-text">CAP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CAP的3进2"><span class="nav-number">1.3.</span> <span class="nav-text">CAP的3进2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BASE"><span class="nav-number">1.4.</span> <span class="nav-text">BASE</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis的特点"><span class="nav-number">2.</span> <span class="nav-text">Redis的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis基础知识"><span class="nav-number">3.</span> <span class="nav-text">Redis基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis数据类型"><span class="nav-number">4.</span> <span class="nav-text">Redis数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Redis-键-key"><span class="nav-number">4.1.</span> <span class="nav-text">Redis 键(key)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#String（字符串）"><span class="nav-number">4.2.</span> <span class="nav-text">String（字符串）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hash（哈希，类似Java里的Map）"><span class="nav-number">4.3.</span> <span class="nav-text">hash（哈希，类似Java里的Map）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#list（列表）"><span class="nav-number">4.4.</span> <span class="nav-text">list（列表）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#set（集合）"><span class="nav-number">4.5.</span> <span class="nav-text">set（集合）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zset-sorted-set：有序集合"><span class="nav-number">4.6.</span> <span class="nav-text">zset(sorted set：有序集合)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-conf配置文件"><span class="nav-number">5.</span> <span class="nav-text">redis.conf配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#GENERAL-通用"><span class="nav-number">5.1.</span> <span class="nav-text">GENERAL 通用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SNAPSHOTTING快照"><span class="nav-number">5.2.</span> <span class="nav-text">SNAPSHOTTING快照</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SECURITY-安全"><span class="nav-number">5.3.</span> <span class="nav-text">SECURITY 安全</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LIMITS-限制"><span class="nav-number">5.4.</span> <span class="nav-text">LIMITS 限制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久化"><span class="nav-number">6.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RDB（Redis-DataBase）"><span class="nav-number">6.1.</span> <span class="nav-text">RDB（Redis DataBase）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#优势"><span class="nav-number">6.1.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#修复"><span class="nav-number">6.1.2.</span> <span class="nav-text">修复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#停止"><span class="nav-number">6.1.3.</span> <span class="nav-text">停止</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AOF"><span class="nav-number">6.2.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#启用AOF"><span class="nav-number">6.2.1.</span> <span class="nav-text">启用AOF</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#文件路径和名称"><span class="nav-number">6.2.2.</span> <span class="nav-text">文件路径和名称</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#可靠性"><span class="nav-number">6.2.3.</span> <span class="nav-text">可靠性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#日志重写"><span class="nav-number">6.2.4.</span> <span class="nav-text">日志重写</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#数据损坏修复"><span class="nav-number">6.2.5.</span> <span class="nav-text">数据损坏修复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#优点"><span class="nav-number">6.2.6.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#缺点"><span class="nav-number">6.2.7.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#小结"><span class="nav-number">6.3.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#同时开启两种持久化方式"><span class="nav-number">6.3.1.</span> <span class="nav-text">同时开启两种持久化方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#性能建议"><span class="nav-number">6.3.2.</span> <span class="nav-text">性能建议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis事务"><span class="nav-number">7.</span> <span class="nav-text">Redis事务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令"><span class="nav-number">7.1.</span> <span class="nav-text">命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-的复制-Master-Slave"><span class="nav-number">8.</span> <span class="nav-text">Redis 的复制(Master/Slave)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一主二仆"><span class="nav-number">8.1.</span> <span class="nav-text">一主二仆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#薪火相传"><span class="nav-number">8.2.</span> <span class="nav-text">薪火相传</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反客为主"><span class="nav-number">8.3.</span> <span class="nav-text">反客为主</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#哨兵模式-反客为主自动版本"><span class="nav-number">8.4.</span> <span class="nav-text">哨兵模式(反客为主自动版本)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点-1"><span class="nav-number">8.5.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="也许丶">
 <meta property="og:description" content="简单的总结了下Mysql的知识点  存储索引 索引 缓存 事务 锁机制">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-10T06:17:27.927Z">
+<meta property="og:updated_time" content="2019-05-13T09:25:33.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql常见问题总结">
 <meta name="twitter:description" content="简单的总结了下Mysql的知识点  存储索引 索引 缓存 事务 锁机制">
@@ -329,7 +329,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="也许丶">
       <meta itemprop="description" content="把生命浪费在美好的事物上">
-      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg">
+      <meta itemprop="image" content="https://i.loli.net/2019/05/10/5cd537e9744ba.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -384,7 +384,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-10 14:17:27" itemprop="dateModified" datetime="2019-04-10T14:17:27+08:00">2019-04-10</time>
+                <time title="修改时间：2019-05-13 17:25:33" itemprop="dateModified" datetime="2019-05-13T17:25:33+08:00">2019-05-13</time>
               
             
           </span>
@@ -446,7 +446,7 @@
 </ul>
 <a id="more"></a>
 <h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><h3 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h3><p><strong>MyISAM是MySQL的默认数据库引擎（5.5版之前）</strong>，由早期的 <strong>ISAM</strong> （Indexed Sequential Access Method：有索引的顺序访问方法）所改良。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（另一种数据库引擎）。</p>
-<p>两者有不同的使用场景，比如：<strong>MyISAM更适合读密集的表，而InnoDB更适合写密集的的表。</strong> 在数据库做主从分离的情况下，经常选择MyISAM作为主库的存储引擎。</p>
+<p>两者有不同的使用场景，比如：<strong>MyISAM更适合读密集的表，而InnoDB更适合写密集的的表。</strong> 在数据库做主从分离的情况下，经常选择InnoDB作为主库的存储引擎。</p>
 <h4 id="MyISAM特点"><a href="#MyISAM特点" class="headerlink" title="MyISAM特点"></a>MyISAM特点</h4><ul>
 <li><p><strong>不支持行锁(MyISAM只有表锁)</strong>，读取时对需要读到的所有表加锁，写入时则对表加排他锁；</p>
 </li>
@@ -483,6 +483,52 @@
 </ul>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><strong>MyISAM更适合读密集的表，而InnoDB更适合写密集的的表。</strong> 在数据库做主从分离的情况下，经常选择MyISAM作为主库的存储引擎。</p>
 <p>一般来说，如果需要事务支持，并且有较高的并发读取频率(MyISAM的表锁的粒度太大，所以当该表写并发量较高时，要等待的查询就会很多了)，InnoDB是不错的选择。如果你的数据量很大（MyISAM支持压缩特性可以减少磁盘的空间占用），而且不需要支持事务时，MyISAM是最好的选择。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">对比项</th>
+<th style="text-align:center">MyISAM</th>
+<th style="text-align:center">InnoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">主外键</td>
+<td style="text-align:center">不支持</td>
+<td style="text-align:center">支持</td>
+</tr>
+<tr>
+<td style="text-align:left">事务</td>
+<td style="text-align:center">不支持</td>
+<td style="text-align:center">支持</td>
+</tr>
+<tr>
+<td style="text-align:left">行表锁</td>
+<td style="text-align:center">表锁，不适合高并发</td>
+<td style="text-align:center">行锁，适合高并发</td>
+</tr>
+<tr>
+<td style="text-align:left">缓存</td>
+<td style="text-align:center">只缓存索引，不缓存真实数据</td>
+<td style="text-align:center">不仅缓存索引，还要缓存真实数据</td>
+</tr>
+<tr>
+<td style="text-align:left">表空间</td>
+<td style="text-align:center">小</td>
+<td style="text-align:center">大</td>
+</tr>
+<tr>
+<td style="text-align:left">关注点</td>
+<td style="text-align:center">性能</td>
+<td style="text-align:center">事务</td>
+</tr>
+<tr>
+<td style="text-align:left">默认安装</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">Y</td>
+</tr>
+</tbody>
+</table>
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>Mysql索引使用的数据结构主要有<strong>BTree索引</strong> 和 <strong>哈希索引</strong> 。对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景，建议选择BTree索引。</p>
 <p>　　Mysql的BTree索引使用的是B数中的B+Tree，但对于主要的两种存储引擎的实现方式是不同的。</p>
 <p>　　<strong>MyISAM:</strong> B+Tree叶节点的data域存放的是数据记录的地址。在索引检索的时候，首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其 data 域的值，然后以 data 域的值为地址读取相应的数据记录。这被称为“非聚簇索引”。</p>
@@ -639,7 +685,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="https://ws1.sinaimg.cn/large/006QzbZDly1g0pmsg1w55j30j80js4bx.jpg" alt="也许丶">
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2019/05/10/5cd537e9744ba.jpg" alt="也许丶">
             
               <p class="site-author-name" itemprop="name">也许丶</p>
               <div class="site-description motion-element" itemprop="description">把生命浪费在美好的事物上</div>
@@ -652,7 +698,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
