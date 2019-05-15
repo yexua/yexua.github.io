@@ -105,8 +105,8 @@
 <meta property="og:description" content="本篇简单讲述一下归并排序以及时间复杂度  归并排序思想 代码实现 过程分析 时间复杂度和空间复杂">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006QzbZDly1g212okix09g30qi0exx1i.gif">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006QzbZDly1g212xwzlo7j30go0ciwf2.jpg">
-<meta property="og:updated_time" content="2019-04-14T06:33:46.707Z">
+<meta property="og:image" content="https://i.loli.net/2019/05/15/5cdb8dc02b5f982188.jpg">
+<meta property="og:updated_time" content="2019-05-15T04:10:00.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序">
 <meta name="twitter:description" content="本篇简单讲述一下归并排序以及时间复杂度  归并排序思想 代码实现 过程分析 时间复杂度和空间复杂">
@@ -387,7 +387,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-14 14:33:46" itemprop="dateModified" datetime="2019-04-14T14:33:46+08:00">2019-04-14</time>
+                <time title="修改时间：2019-05-15 12:10:00" itemprop="dateModified" datetime="2019-05-15T12:10:00+08:00">2019-05-15</time>
               
             
           </span>
@@ -454,7 +454,7 @@
 <h4 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h4><p>图片来源：<a href="https://mp.weixin.qq.com/s/vn3KiV-ez79FmbZ36SX9lg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/vn3KiV-ez79FmbZ36SX9lg</a></p>
 <p><img src="http://ww1.sinaimg.cn/large/006QzbZDly1g212okix09g30qi0exx1i.gif" alt="归并排序-动画演示"></p>
 <p><strong>merge过程：</strong></p>
-<p><img src="https://ws1.sinaimg.cn/large/006QzbZDly1g212xwzlo7j30go0ciwf2.jpg" alt></p>
+<p><img src="https://i.loli.net/2019/05/15/5cdb8dc02b5f982188.jpg" alt="merge"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (p1 &lt;= m) &#123;</span><br><span class="line">    help[i++] = arr[p1++];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (p2 &lt;= right) &#123;</span><br><span class="line">    help[i++] = arr[p2++];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p1,p2每次只会移动一个，所以必定会有一个越界。如果p1耗尽，需要把p2后面内容拷贝至help数组，反之。</span><br></pre></td></tr></table></figure>
 <h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><p>当有n个记录时，需进行$\lceil log_2n \rceil$躺归并排序，其关键字比较次数不超过n，元素移动次数都是n，因此，归并排序的时间复杂度为$O(nlog_2n)$。</p>
 <h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><p>用顺序表实现归并排序时，需要和待排序记录个数相等的辅助存储空间，所以空间复杂度为O(n)。</p>
@@ -881,6 +881,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
