@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yexua.github.io/2019/04/17/TCP%E3%80%81UDP/</loc>
+    
+    <lastmod>2019-09-16T01:14:35.796Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yexua.github.io/2019/08/09/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</loc>
     
     <lastmod>2019-08-16T14:13:45.689Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>https://yexua.github.io/2019/05/08/NIO/</loc>
     
     <lastmod>2019-06-17T07:44:45.371Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yexua.github.io/2019/04/17/TCP%E3%80%81UDP/</loc>
-    
-    <lastmod>2019-06-02T07:45:56.391Z</lastmod>
     
   </url>
   
